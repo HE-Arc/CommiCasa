@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->integer('quantity');
-            $table->integer('user_id');
-            $table->integer('category_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('category_id')->unsigned();
 
             $table->boolean('regular');
             $table->integer('alert');
