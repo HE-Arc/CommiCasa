@@ -17,8 +17,11 @@ class CreateShoppingTable extends Migration
             $table->increments('id');
             $table->integer('product_id');
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
+        });
+
+        Schema::table('shopping', function($table) {
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
