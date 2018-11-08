@@ -10,7 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/product', [
+    'as' => 'listProduct',
+    'uses' => 'ProductController@listProduct'
+]);
+
+Route::get('/product/add', [
+    'as' => 'addProduct',
+    'uses' => 'ProductController@addProduct'
+]);
+
+Route::post('/validate', [
+    'as' => 'validProduct',
+    'uses' => 'ProductController@validProduct'
+]);
+
+
