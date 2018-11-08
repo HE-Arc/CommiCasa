@@ -23,6 +23,6 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
-       var_dump( $request->isMethod('post')); die;
+       var_dump( $request->all()); die;
     }
 }

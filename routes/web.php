@@ -24,8 +24,8 @@ Route::get('/product/add', [
     'uses' => 'ProductController@addProduct'
 ]);
 
-Route::post('/validate', [
-    'as' => 'validProduct',
+Route::post('/product/validate', [
+    'as' => 'validateProduct',
     'uses' => 'ProductController@validProduct'
 ]);
 

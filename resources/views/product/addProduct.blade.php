@@ -4,7 +4,8 @@
     <div class="container">
         <h1> Add Product</h1>
 
-        <form method="post" action="{{route('validProduct')}}">
+        <form method="post" action="{{route('validateProduct')}}">
+            @csrf
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" placeholder="Enter a name" class="form-control">
