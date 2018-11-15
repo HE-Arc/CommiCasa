@@ -45,10 +45,10 @@
                                 <a class="nav-link" href="{{ url('/product') }}">Maison <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href"{{ url('/recipe') }}">Liste des Courses <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ url('/shopping') }}">Liste des Courses <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/product') }}">Recettes <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ url('/recipe') }}">Recettes <span class="sr-only">(current)</span></a>
                             </li>
                             @endguest
                         </ul>
