@@ -29,4 +29,20 @@ Route::post('/product/validate', [
     'uses' => 'ProductController@validProduct'
 ]);
 
+Route::get('/category', [
+    'as' => 'listCategory',
+    'uses' => 'CategoryController@listCategory'
+]);
+
+
+Route::get('/category/add', [
+    'as' => 'addCategory',
+    'uses' => 'CategoryController@addCategory'
+]);
+
+Route::post('/category/validate', [
+    'as' => 'validateCategory',
+    'uses' => 'CategoryController@validCategory'
+]);
+
 
