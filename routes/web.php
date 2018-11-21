@@ -29,10 +29,12 @@ Route::post('/product/validate', [
     'uses' => 'ProductController@validProduct'
 ]);
 
+
 Route::post('/product/update', [
     'as' => 'updateProduct',
     'uses' => 'ProductController@updateProduct'
 ]);
+
 
 Route::get('/category', [
     'as' => 'listCategory',
@@ -44,9 +46,23 @@ Route::get('/category/add', [
     'uses' => 'CategoryController@addCategory'
 ]);
 
-Route::post('/category/validate', [
-    'as' => 'validateCategory',
-    'uses' => 'CategoryController@validCategory'
+Route::match(['get', 'post'],'/category/update/{id}', [
+    'as' => 'updateCategory',
+    'uses' => 'CategoryController@updateCategory'
 ]);
 
 
+Route::get('/category/delete/{id}', [
+    'as' => 'deleteCategory',
+    'uses' => 'CategoryController@deleteCategory'
+]);
+
+Route::get('/category/show/{id}', [
+    'as' => 'showCategory',
+    'uses' => 'CategoryController@showCategory'
+]);
+
+Route::post('/category/create', [
+    'as' => 'createCategory',
+    'uses' => 'CategoryController@createCategory'
+]);
