@@ -29,11 +29,15 @@ Route::post('/product/validate', [
     'uses' => 'ProductController@validProduct'
 ]);
 
+Route::post('/product/update', [
+    'as' => 'updateProduct',
+    'uses' => 'ProductController@updateProduct'
+]);
+
 Route::get('/category', [
     'as' => 'listCategory',
     'uses' => 'CategoryController@listCategory'
 ]);
-
 
 Route::get('/category/add', [
     'as' => 'addCategory',

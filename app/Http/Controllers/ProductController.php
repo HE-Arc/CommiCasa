@@ -4,6 +4,7 @@ namespace CommiCasa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CommiCasa\Product;
+use CommiCasa\User;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,9 @@ class ProductController extends Controller
 
     public function listProduct()
     {
-        return view('product/listProduct');
+        $products = Product::All();
+        $users = User::All();
+        return view('product/listProduct', compact('products', 'users'));
     }
 
     public function addProduct()
@@ -25,6 +28,7 @@ class ProductController extends Controller
     public function validProduct(Request $request)
     {
         $param = $request->except('_token');
+        var_dump($param); die ;
         if($param['image'] == null)
             $param['image'] = 'null';
 
@@ -41,6 +45,28 @@ class ProductController extends Controller
         Product::create($param);
 
         return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+    }
+
+    public function updateProduct(Request $request)
+    {
+        $param = $request->except('_token');
+        $product = Product::where('id', $param['product_id'])->first();
+
+        if($param['quantity'] == '1')
+        {
+            $param['quantity'] = $product->quantity + 1;
+            $product->update($param);
+            return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+        }
+        else
+        {
+            if(!$product->quantity <= 0)
+            {
+                $param['quantity'] = $product->quantity - 1;
+                $product->update($param);
+            }
+            return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
+        }
     }
 
     public function backWithMessage($type, $message)
