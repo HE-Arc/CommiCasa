@@ -35,6 +35,11 @@ Route::post('/product/update', [
     'uses' => 'ProductController@updateProduct'
 ]);
 
+Route::match(['get', 'post'], '/product/{id}', [
+    'as' => 'editProduct',
+    'uses' => 'ProductController@editProduct'
+]);
+
 
 Route::get('/category', [
     'as' => 'listCategory',

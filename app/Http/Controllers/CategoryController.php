@@ -48,7 +48,7 @@ class CategoryController extends Controller
         }
 
         return view('category/addCategory')->with('category', $category);
-    }
+}
 
     public function addCategory()
     {
