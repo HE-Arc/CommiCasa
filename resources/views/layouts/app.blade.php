@@ -41,14 +41,14 @@
                             @if (Route::has('register'))
                             @endif
                             @else
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('/product') }}">Maison <span class="sr-only">(current)</span></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/shopping') }}">Shopping List <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/shopping') }}">Liste des Courses <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ url('/recipe') }}">Recipe <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/recipe') }}">Recettes <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ route('listCategory') }}">Categories <span class="sr-only">(current)</span></a>
                             </li>
                             @endguest
                         </ul>
