@@ -28,7 +28,6 @@ class ProductController extends Controller
     public function validProduct(Request $request)
     {
         $param = $request->except('_token');
-        var_dump($param); die ;
         if($param['image'] == null)
             $param['image'] = 'null';
 

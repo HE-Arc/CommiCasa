@@ -8,13 +8,17 @@
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="Enter a name" class="form-control" value="{{isset($category) ? $category->name: ''}}">
+                <input type="text" name="name" id="name" placeholder="Enter a name" class="form-control" value="{{isset($category) ? $category->name: ''}}" required>
             </div>
 
             <div class="form-group">
                 <button type="submit" class="btn btn-info">{{isset($category) ? 'Update' : 'Add'}}</button>
             </div>
-
         </form>
+
+        <div style="{{isset($category) ? '' : 'display: none;'}}" >
+            <button  class="btn btn-info" onclick="window.location.href='{{isset($category) ? route('deleteCategory', ['id' => $category->id]) : ''}}'">Delete this category</button>
+        </div>
+
     </div>
 @endsection

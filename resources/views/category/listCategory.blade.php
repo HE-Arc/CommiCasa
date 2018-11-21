@@ -6,19 +6,19 @@
 
         <button class="btn btn-info" onclick="window.location.href='{{route('addCategory')}}'">Add category</button>
         <hr>
+        @if(count($categories) > 0)
         <table class="table table-hover">
             <tr>
                 <td>#</td>
                 <td>Name</td>
             </tr>
             @foreach($categories as $category)
-                <tr >
+                <tr onclick="location.href='{{route('updateCategory', ['id' => $category->id])}}'">
+                    <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
-                    <td><a href="{{route('showCategory', ['id' => $category->id])}}">Detail</a></td>
-                    <td><a href="{{route('updateCategory', ['id' => $category->id])}}">Modify</a></td>
-                    <td><a href="{{route('deleteCategory', ['id' => $category->id])}}">Remove-</a></td>
                 </tr>
             @endforeach
         </table>
+        @endif
     </div>
 @endsection
