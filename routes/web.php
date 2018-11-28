@@ -40,10 +40,20 @@ Route::match(['get', 'post'], '/product/{id}', [
     'uses' => 'ProductController@editProduct'
 ]);
 
+Route::get('/product/delete/{id}', [
+    'as' => 'deleteProduct',
+    'uses' => 'ProductController@deleteProduct'
+]);
+
 //Shopping List
 Route::get('/shopping', [
     'as' => 'listShopping',
-    'uses' => 'ProductController@listShopping'
+    'uses' => 'ShoppingController@listShopping'
+]);
+
+Route::post('/shopping', [
+    'as' => 'addShopping',
+    'uses' => 'ShoppingController@addShopping'
 ]);
 
 //Categories Route

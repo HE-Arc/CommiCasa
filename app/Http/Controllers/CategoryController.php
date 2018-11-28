@@ -30,7 +30,6 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        var_dump($category);
         return redirect()->route('listCategory')->with('success', 'Category vas deleted');
     }
 

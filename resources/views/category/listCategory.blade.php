@@ -5,7 +5,6 @@
         <h1> Category List</h1>
 
         <button class="btn btn-info" onclick="window.location.href='{{route('addCategory')}}'">Add category</button>
-        <hr>
         @if(count($categories) > 0)
         <table class="table table-hover">
             <tr>
@@ -19,6 +18,8 @@
                 </tr>
             @endforeach
         </table>
+        @else
+            <h5>@lang("No categories !")</h5>
         @endif
     </div>
 @endsection
