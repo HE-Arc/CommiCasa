@@ -12,7 +12,11 @@
 */
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', [
+    'as' => 'index',
+    'uses' => 'HomeController@index',
+    'middelware' => 'auth'
+])->name('home');
 
 Route::get('/product', [
     'as' => 'listProduct',
