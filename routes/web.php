@@ -45,4 +45,22 @@ Route::post('/category/validate', [
     'uses' => 'CategoryController@validCategory'
 ]);
 
+Route::get('/recipe', [
+    'as' => 'listRecipe',
+    'uses' => 'RecipeController@listRecipe'
+]);
 
+Route::get('/recipe/add', [
+    'as' => 'addRecipe',
+    'uses' => 'RecipeController@addRecipe'
+]);
+
+Route::get('/recipe/show', [
+    'as' => 'showRecipe',
+    'uses' => 'RecipeController@showRecipe'
+]);
+
+Route::post('/recipe/validate', [
+    'as' => 'validateRecipe',
+    'uses' => 'RecipeController@validRecipe'
+]);
