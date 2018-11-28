@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-    <h1> Recipe List</h1>
-    <a href="{{route('addRecipe')}}">Add new Recipe!</a>
+    <h1>Recipe Description</h1>
 </div>
 @endsection
