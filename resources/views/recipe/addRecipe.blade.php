@@ -19,26 +19,30 @@
                         <option>{{$product->name}}</option>
                         @endforeach
                     </select>
-                    <input id="fieldNum1B" class="form-control" type="number" min="1" value="1">
                     <button id="b1B" class="btn add-more" type="button">+</button>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="form-group">
             <input type="hidden" name="count" value="1" />
             <div class="control-group" id="fields">
-                <label class="control-label" for="field1">Nice Multiple Form Fields</label>
-                <div class="controls" id="profs">
-                    <form class="input-append">
-                        <div id="field">
-                            <input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8" />
-                            <button id="b1" class="btn add-more" type="button">+</button>
+                <label class="control-label" for="field1">Ingrédients</label>
+                <div class="input-group">
+                    <div id="field">
+                        <div id="field1">
+                            <select class="custom-select" name="prod1">
+                                @foreach($products as $product)
+                                <option>{{$product->name}}</option>
+                                @endforeach
+                            </select>
+                            <input id="numfield1" name="quant1" class="form-control" type="number" min="1" value="1">
                         </div>
-                    </form>
-                    <br>
-                    <small>Press + to add another form field :)</small>
+                        <button id="b1" class="btn add-more" type="button">+</button>
+                    </div>
                 </div>
+                <br>
+                <small>Press + to add another form field :)</small>
             </div>
         </div>
 
@@ -63,12 +67,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var next = 1;
+        var options = '@foreach ($products as $product) <option>{{$product->name}}</option>@endforeach';
         $(".add-more").click(function(e) {
             e.preventDefault();
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            var newIn = '<div id="field' + next + '"><select class="custom-select" name="prod' + next + '">' + options + '</select><input name="quant' + next + '" class="form-control" type="number" min="1" value="1"></div>';
             var newInput = $(newIn);
             var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
             var removeButton = $(removeBtn);

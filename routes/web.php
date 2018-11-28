@@ -67,7 +67,7 @@ Route::get('/category/add', [
     'uses' => 'CategoryController@addCategory'
 ]);
 
-Route::match(['get', 'post'],'/category/update/{id}', [
+Route::match(['get', 'post'], '/category/update/{id}', [
     'as' => 'updateCategory',
     'uses' => 'CategoryController@updateCategory'
 ]);
@@ -86,6 +86,7 @@ Route::get('/category/show/{id}', [
 Route::post('/category/create', [
     'as' => 'createCategory',
     'uses' => 'CategoryController@createCategory'
+]);
 Route::get('/recipe', [
     'as' => 'listRecipe',
     'uses' => 'RecipeController@listRecipe'
