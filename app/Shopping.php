@@ -4,7 +4,7 @@ namespace CommiCasa;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Shopping extends Model
 {
-    protected $fillable = ['name', 'slug'];
+    //
 }
