@@ -4,8 +4,7 @@
     <div class="container">
         <h1> {{isset($product) ? 'Edit' : 'Add'}} Product</h1>
 
-        <form method="post"
-              action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('addProduct')}}">
+        <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
@@ -55,13 +54,17 @@
             <div class="form-group">
                 <label for="regular">Automatically add in the shopping list when is empty</label>
                 <input type='hidden' value='off' name='regular'>
-                <input type="checkbox" name="regular" id="regular">
+                <input type="checkbox" name="regular" id="regular"
+                @if(isset($product) && $product->regular == 1)
+                    checked
+                @endif
+                >
             </div>
 
             <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-info"> Add Product</button>
+                <button type="submit" class="btn btn-info"> {{isset($product) ? 'Edit Product' : 'Add Product'}}</button>
             </div>
         </form>
     </div>

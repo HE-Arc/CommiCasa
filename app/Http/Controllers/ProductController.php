@@ -30,6 +30,7 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
+        //var_dump($request); die;
         $param = $request->except('_token');
         if($param['image'] == null)
             $param['image'] = '';
@@ -73,6 +74,7 @@ class ProductController extends Controller
 
     public function editProduct(Request $request, $id)
     {
+        //var_dump($request); die;
         $categories = Category::All();
         $product = Product::find($id);
 

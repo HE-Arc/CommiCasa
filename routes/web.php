@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+//Product Route
 Route::get('/product', [
     'as' => 'listProduct',
     'uses' => 'ProductController@listProduct'
@@ -29,7 +30,6 @@ Route::post('/product/validate', [
     'uses' => 'ProductController@validProduct'
 ]);
 
-
 Route::post('/product/update', [
     'as' => 'updateProduct',
     'uses' => 'ProductController@updateProduct'
@@ -40,7 +40,13 @@ Route::match(['get', 'post'], '/product/{id}', [
     'uses' => 'ProductController@editProduct'
 ]);
 
+//Shopping List
+Route::get('/shopping', [
+    'as' => 'listShopping',
+    'uses' => 'ProductController@listShopping'
+]);
 
+//Categories Route
 Route::get('/category', [
     'as' => 'listCategory',
     'uses' => 'CategoryController@listCategory'
