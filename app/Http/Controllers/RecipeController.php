@@ -47,9 +47,6 @@ class RecipeController extends Controller
             $param['description'] = 'null';
         }
 
-        var_dump($param);
-        die;
-
         return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
     }
 
