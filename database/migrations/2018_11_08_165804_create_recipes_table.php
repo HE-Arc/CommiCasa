@@ -21,7 +21,7 @@ class CreateRecipesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('recipes', function($table) {
+        Schema::table('recipes', function ($table) {
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('name_recipe_id')->references('id')->on('list_recipes')->onDelete('cascade');
         });

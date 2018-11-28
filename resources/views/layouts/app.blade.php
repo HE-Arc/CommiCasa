@@ -12,6 +12,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -45,7 +46,7 @@
                                 <a class="nav-link" href="{{ url('/shopping') }}">Shopping List <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/recipe') }}">Recipe <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ route('listRecipe') }}">Recipe <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('listCategory') }}">Categories <span class="sr-only">(current)</span></a>

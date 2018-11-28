@@ -15,9 +15,13 @@ class CreateListRecipesTable extends Migration
     {
         Schema::create('list_recipes', function (Blueprint $table) {
             $table->increments('id');
+            $table->int('user_id')->unsigned();
             $table->string('name');
             $table->string('description');
             $table->timestamps();
+        });
+        Schema::table('list_recipes', function ($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
