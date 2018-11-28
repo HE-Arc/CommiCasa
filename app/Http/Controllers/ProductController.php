@@ -5,6 +5,7 @@ namespace CommiCasa\Http\Controllers;
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\User;
+use CommiCasa\Category;
 
 class ProductController extends Controller
 {
@@ -22,17 +23,20 @@ class ProductController extends Controller
 
     public function addProduct()
     {
-        return view('product/addProduct');
+        $categories = Category::All();
+
+        return view('product/addProduct', compact('product', 'categories'));
     }
 
     public function validProduct(Request $request)
     {
+        //var_dump($request); die;
         $param = $request->except('_token');
         if($param['image'] == null)
-            $param['image'] = 'null';
+            $param['image'] = '';
 
         if($param['description'] == null)
-            $param['description'] = 'null';
+            $param['description'] = '';
 
         if($param['regular'] == 'off')
             $param['regular'] = 0;
@@ -66,6 +70,40 @@ class ProductController extends Controller
             }
             return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
         }
+    }
+
+    public function editProduct(Request $request, $id)
+    {
+        //var_dump($request); die;
+        $categories = Category::All();
+        $product = Product::find($id);
+
+        if($request->isMethod('post'))
+        {
+            $parameters = $request->except(['_token']);
+
+            if($parameters['image'] == null)
+                $parameters['image'] = 'null';
+            if($parameters['description'] == null)
+                $parameters['description'] = 'null';
+            if($parameters['regular'] == 'off')
+                $parameters['regular'] = 0;
+            else
+                $parameters['regular'] = 1;
+
+            $product->name = $parameters['name'];
+            $product->category_id = $parameters['category_id'];
+            $product->quantity = $parameters['quantity'];
+            $product->regular = $parameters['regular'];
+            $product->alert = $parameters['alert'];
+            $product->description = $parameters['description'];
+            $product->image = $parameters['image'];
+
+            $product->save();
+            return redirect()->route('listProduct')->with('success', 'Product has been updated');
+        }
+
+        return view('product/addProduct', compact('product', 'categories'));
     }
 
     public function backWithMessage($type, $message)
