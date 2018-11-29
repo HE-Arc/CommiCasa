@@ -30,22 +30,46 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
-        //var_dump($request); die;
-        $param = $request->except('_token');
-        if($param['image'] == null)
-            $param['image'] = '';
 
-        if($param['description'] == null)
-            $param['description'] = '';
+        //var_dump($parameters);
 
-        if($param['regular'] == 'off')
-            $param['regular'] = 0;
+        $parameters = $request->except('_token');
+
+        if($request->hasFile('image')) {
+            $imageNameWithExt = $request->file('image')->getClientOriginalName();
+
+            $image = pathinfo($imageNameWithExt, PATHINFO_FILENAME);
+
+            $extension = $request->file(image)->getClientOriginalExtension();
+
+            $imageNameToStore = $imageNameWithExt.'.'.$extension;
+
+            $path = $request->file('image')->storeAs('public/products/images', $imageNameToStore);
+        } else {
+            $imageNameToStore = '';
+        }
+
+        if($parameters['regular'] == 'off')
+            $parameters['regular'] = 0;
         else
-            $param['regular'] = 1;
+            $parameters['regular'] = 1;
 
-        //var_dump($param); die;
+        $product = new Product();
 
-        Product::create($param);
+
+        $product->name = $parameters['name'];
+        $product->quantity = $parameters['quantity'];
+        $product->user_id = auth()->user()->id;
+        $product->category_id = $parameters['category_id'];
+        $product->regular = $parameters['regular'];
+        $product->alert = $parameters['alert'];
+        $product->description = $parameters['description'];
+        $product->image = $imageNameToStore;
+
+        $product->save();
+
+        $product->save();
+
 
         return redirect()->route('listProduct')->with('success', __('Product has been add !'));
     }

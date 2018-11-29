@@ -41,7 +41,7 @@ class CategoryController extends Controller
         if($request->isMethod('post'))
         {
             $parameters = $request->except(['_token']);
-            //Databass
+            //Database
             $category->name = $parameters['name'];
             $category->save();
             return redirect()->route('listCategory')->with('success', 'Category vas updated');

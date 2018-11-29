@@ -80,6 +80,8 @@ Route::get('/category/show/{id}', [
 Route::post('/category/create', [
     'as' => 'createCategory',
     'uses' => 'CategoryController@createCategory'
+]);
+
 Route::get('/recipe', [
     'as' => 'listRecipe',
     'uses' => 'RecipeController@listRecipe'
