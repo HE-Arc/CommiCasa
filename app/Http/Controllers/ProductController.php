@@ -4,8 +4,8 @@ namespace CommiCasa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CommiCasa\Product;
-use CommiCasa\User;
 use CommiCasa\Category;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -16,16 +16,15 @@ class ProductController extends Controller
 
     public function listProduct()
     {
-        $products = Product::All();
-        $users = User::All();
-        return view('product/listProduct', compact('products', 'users'));
+        $products = Product::where('user_id', Auth::user()->id)->get();
+        return view('product/listProduct', compact('products'));
     }
 
     public function addProduct()
     {
-        $categories = Category::All();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
 
-        return view('product/addProduct', compact('product', 'categories'));
+        return view('product/addProduct', compact( 'categories'));
     }
 
     public function validProduct(Request $request)
@@ -67,9 +66,6 @@ class ProductController extends Controller
         $product->image = $imageNameToStore;
 
         $product->save();
-
-        $product->save();
-
 
         return redirect()->route('listProduct')->with('success', __('Product has been add !'));
     }
@@ -128,6 +124,13 @@ class ProductController extends Controller
         }
 
         return view('product/addProduct', compact('product', 'categories'));
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('listProduct')->with('success', 'Product was deleted');
     }
 
     public function backWithMessage($type, $message)

@@ -5,6 +5,7 @@ namespace CommiCasa\Http\Controllers;
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Shopping;
+use Auth;
 
 class ShoppingController extends Controller
 {
@@ -15,8 +16,27 @@ class ShoppingController extends Controller
 
     public function listShopping()
     {
-        $products = Product::All();
-        $users = User::All();
-        return view('shopping/listProduct', compact('products', 'users'));
+        /*
+        SELECT `shoppings`.`product_id`, `products`.`id`, `products`.`name`, `products`.`quantity`
+        FROM `products`, `shoppings`
+        WHERE (`shoppings`.`product_id` = `products`.`id`)
+        AND (`shoppings`.`user_id` = '1')
+         */
+        $products =Shopping::from('shoppings as s')
+                ->join('products as p','p.id','=','s.product_id')
+                ->select('p.*')
+                ->where('p.user_id', Auth::user()->id)
+                ->get();
+
+        return view('shopping/listShopping', compact('products'));
+    }
+
+    public function addShopping(Request $request)
+    {
+        $param = $request->except('_token');
+
+        Shopping::create($param);
+
+        return redirect()->route('listProduct')->with('success', __('Product has been add too shopping !'));
     }
 }

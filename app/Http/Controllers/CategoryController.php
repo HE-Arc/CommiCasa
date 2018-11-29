@@ -4,6 +4,7 @@ namespace CommiCasa\Http\Controllers;
 
 use CommiCasa\Category;
 use Illuminate\Http\Request;
+use Auth;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
 
     public function listCategory()
     {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
 
         return view('category/listCategory')->with('categories', $categories);
     }
@@ -30,7 +31,6 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        var_dump($category);
         return redirect()->route('listCategory')->with('success', 'Category vas deleted');
     }
 
