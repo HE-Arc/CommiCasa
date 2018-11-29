@@ -5,7 +5,7 @@ namespace CommiCasa\Http\Controllers;
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Category;
-use CommiCasa\Http\Controllers\Auth;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -16,13 +16,13 @@ class ProductController extends Controller
 
     public function listProduct()
     {
-        $products = Product::All();
+        $products = Product::where('user_id', Auth::user()->id)->get();
         return view('product/listProduct', compact('products'));
     }
 
     public function addProduct()
     {
-        $categories = Category::All();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
 
         return view('product/addProduct', compact( 'categories'));
     }

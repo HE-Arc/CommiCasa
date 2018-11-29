@@ -16,9 +16,18 @@ class ShoppingController extends Controller
 
     public function listShopping()
     {
-        $shoppings = Shopping::where('user_id', Auth::user()->id);
-        //$products = Product::where('id', $shoppings->product_id);
-        $products = Product::All();
+        /*
+        SELECT `shoppings`.`product_id`, `products`.`id`, `products`.`name`, `products`.`quantity`
+        FROM `products`, `shoppings`
+        WHERE (`shoppings`.`product_id` = `products`.`id`)
+        AND (`shoppings`.`user_id` = '1')
+         */
+        $products =Shopping::from('shoppings as s')
+                ->join('products as p','p.id','=','s.product_id')
+                ->select('p.*')
+                ->where('p.user_id', Auth::user()->id)
+                ->get();
+
         return view('shopping/listShopping', compact('products'));
     }
 
