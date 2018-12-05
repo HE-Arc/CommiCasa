@@ -29,8 +29,8 @@
 
             <div class="form-group">
                 <label for="quantity">Quantity</label>
-                <input type="number" name="quantity" id="quantity" class="form-control" min="1"
-                       value="{{isset($product) ? $product->quantity: '1'}}">
+                <input type="number" name="quantity" id="quantity" class="form-control" min="0"
+                       value="{{isset($product) ? $product->quantity: '0'}}">
             </div>
 
             <div class="form-group">
@@ -69,7 +69,7 @@
         </form>
 
         <div style="{{isset($product) ? '' : 'display: none;'}}" >
-            <button  class="btn btn-info" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
+            <button  class="btn btn-danger" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
         </div>
     </div>
 @endsection

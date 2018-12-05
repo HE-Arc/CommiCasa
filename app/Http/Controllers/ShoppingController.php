@@ -39,4 +39,11 @@ class ShoppingController extends Controller
 
         return redirect()->route('listProduct')->with('success', __('Product has been add too shopping !'));
     }
+
+    public function deleteShopping(Request $request)
+    {
+        $shopping = Shopping::where('product_id',$request['product_id'])->first();
+        $shopping->delete();
+        return redirect()->route('listShopping')->with('success', __('Product has been remove to shopping list !'));
+    }
 }

@@ -5,6 +5,7 @@ namespace CommiCasa\Http\Controllers;
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Category;
+use CommiCasa\Shopping;
 use Auth;
 
 class ProductController extends Controller
@@ -66,6 +67,7 @@ class ProductController extends Controller
         $product->image = $imageNameToStore;
 
         $product->save();
+        $this->checkRegular($product->id);
 
         return redirect()->route('listProduct')->with('success', __('Product has been add !'));
     }
@@ -79,6 +81,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
+            $this->checkRegular($product->id);
             return redirect()->route('listProduct')->with('success', __('Product has been add !'));
         }
         else
@@ -87,6 +90,7 @@ class ProductController extends Controller
             {
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
+                $this->checkRegular($product->id);
             }
             return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
         }
@@ -120,6 +124,8 @@ class ProductController extends Controller
             $product->image = $parameters['image'];
 
             $product->save();
+
+            $this->checkRegular($id);
             return redirect()->route('listProduct')->with('success', 'Product has been updated');
         }
 
@@ -131,6 +137,21 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
         return redirect()->route('listProduct')->with('success', 'Product was deleted');
+    }
+
+    public function checkRegular($id)
+    {
+        $product = Product::find($id);
+        if($product->regular != 0)
+        {
+            if($product->alert > $product->quantity || $product->quantity == 0)
+            {
+                $shopping = new Shopping();
+                $shopping->product_id = $product->id;
+                $shopping->user_id =  Auth::user()->id;
+                $shopping->save();
+            }
+        }
     }
 
     public function backWithMessage($type, $message)

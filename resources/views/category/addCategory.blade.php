@@ -17,7 +17,7 @@
         </form>
 
         <div style="{{isset($category) ? '' : 'display: none;'}}" >
-            <button  class="btn btn-info" onclick="window.location.href='{{isset($category) ? route('deleteCategory', ['id' => $category->id]) : ''}}'">Delete this category</button>
+            <button  class="btn btn-danger" onclick="window.location.href='{{isset($category) ? route('deleteCategory', ['id' => $category->id]) : ''}}'">Delete this category</button>
         </div>
 
     </div>

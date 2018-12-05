@@ -26,6 +26,11 @@
                             <button name="quantity" value="1" class="btn btn-sm btn-sm btn-primary">+1</button>
                             <button name="quantity" value="-1" class="btn btn-sm btn-sm btn-primary">-1</button>
                         </form>
+                        <form action="{{ route('deleteShopping') }}" method="POST">
+                            @csrf
+                            <input type='hidden' value='{{$product->id}}' name='product_id'>
+                            <button name="quantity" value="-1" class="btn btn-sm btn-sm btn-danger">Delete</button>
+                        </form>
                 </tr>
             @endforeach
         </table>
