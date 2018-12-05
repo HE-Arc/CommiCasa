@@ -23,6 +23,16 @@
                     @endif
                 </td>
 
+
+                @if($product->quantity == 0)
+                    <tr bgcolor="#FC5D5D" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                @elseif($product->alert >= $product->quantity)
+                    <tr bgcolor="#F0E68C" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                @else
+                    <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                @endif
+
+                <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->image}}</td>
                 <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->name}}</td>
                 <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->quantity}}</td>
                 <td class="buttons align-middle text-justify">
@@ -32,8 +42,6 @@
                     <button name="quantity" value="1" class="btn btn-sm btn-sm btn-primary">+1</button>
                     <button name="quantity" value="-1" class="btn btn-sm btn-sm btn-primary">-1</button>
                 </form>
-
-
                 <form action="{{ route('addShopping') }}" method="POST">
                     @csrf
                     <input type='hidden' value='{{$product->id}}' name='product_id'>

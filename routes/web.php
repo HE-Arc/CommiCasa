@@ -60,6 +60,11 @@ Route::post('/shopping', [
     'uses' => 'ShoppingController@addShopping'
 ]);
 
+Route::post('/deleteShopping', [
+    'as' => 'deleteShopping',
+    'uses' => 'ShoppingController@deleteShopping'
+]);
+
 //Categories Route
 Route::get('/category', [
     'as' => 'listCategory',
@@ -75,7 +80,6 @@ Route::match(['get', 'post'], '/category/update/{id}', [
     'as' => 'updateCategory',
     'uses' => 'CategoryController@updateCategory'
 ]);
-
 
 Route::get('/category/delete/{id}', [
     'as' => 'deleteCategory',
