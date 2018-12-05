@@ -4,7 +4,7 @@
     <div class="container">
         <h1> {{isset($product) ? 'Edit' : 'Add'}} Product</h1>
 
-        <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}">
+        <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}"  enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
@@ -42,8 +42,10 @@
             <div class="form-group">
                 <label for="image">Image</label>
                 <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg"
-                       value="{{isset($product) ? $product->image: ''}}">
+                       value="{{isset($product) ? : ''}}">
+
             </div>
+
 
             <div class="form-group">
                 <label for="description">Description</label>
@@ -72,4 +74,6 @@
             <button  class="btn btn-info" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
         </div>
     </div>
+
+
 @endsection

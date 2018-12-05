@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Category;
 use Auth;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class ProductController extends Controller
 {
@@ -29,41 +31,36 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
-
-        //var_dump($parameters);
-
         $parameters = $request->except('_token');
 
-        if($request->hasFile('image')) {
-            $imageNameWithExt = $request->file('image')->getClientOriginalName();
+        //var_dump($parameters); die;
 
-            $image = pathinfo($imageNameWithExt, PATHINFO_FILENAME);
-
-            $extension = $request->file(image)->getClientOriginalExtension();
-
-            $imageNameToStore = $imageNameWithExt.'.'.$extension;
-
-            $path = $request->file('image')->storeAs('public/products/images', $imageNameToStore);
-        } else {
-            $imageNameToStore = '';
-        }
-
-        if($parameters['regular'] == 'off')
-            $parameters['regular'] = 0;
+        if($request['regular'] == 'off')
+            $request['regular'] = 0;
         else
-            $parameters['regular'] = 1;
+            $request['regular'] = 1;
+
+        $path = 'products/images/' . Auth::user()->id;
+        $file = $request->file('image');
+
+        if($request->hasFile('image')){
+            $fileName = $request->file('image')->getClientOriginalName();
+            $file->move($path, $fileName);
+        } else {
+            $fileName = "default.png";
+        }
 
         $product = new Product();
 
 
-        $product->name = $parameters['name'];
-        $product->quantity = $parameters['quantity'];
-        $product->user_id = auth()->user()->id;
-        $product->category_id = $parameters['category_id'];
-        $product->regular = $parameters['regular'];
-        $product->alert = $parameters['alert'];
-        $product->description = $parameters['description'];
-        $product->image = $imageNameToStore;
+        $product->name = $request['name'];
+        $product->quantity = $request['quantity'];
+        $product->user_id = Auth::user()->id;
+        $product->category_id = $request['category_id'];
+        $product->regular = $request['regular'];
+        $product->alert = $request['alert'];
+        $product->description = $request['description'];
+        $product->image = $fileName;
 
         $product->save();
 

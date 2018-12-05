@@ -15,7 +15,14 @@
             </tr>
             @foreach($products as $product)
             <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
-                <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->image}}</td>
+                <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">
+                    @if($product->image!= "default.png")
+                        <img src="products/images/{{Auth::user()->id}}/{{$product->image}}" alt="" height="75" width="75">
+                    @else
+                        <img src="products/images/default.png" alt="" height="75" width="75">
+                    @endif
+                </td>
+
                 <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->name}}</td>
                 <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->quantity}}</td>
                 <td class="buttons align-middle text-justify">
@@ -40,4 +47,5 @@
             <h5>@lang("No products in your house !")</h5>
         @endif
     </div>
+
 @endsection
