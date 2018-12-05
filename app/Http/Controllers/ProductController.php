@@ -32,10 +32,6 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
-        $parameters = $request->except('_token');
-
-        //var_dump($parameters); die;
-
         if($request['regular'] == 'off')
             $request['regular'] = 0;
         else
@@ -98,19 +94,30 @@ class ProductController extends Controller
         //var_dump($request); die;
         $categories = Category::All();
         $product = Product::find($id);
-
+        $image = $product['image'];
         if($request->isMethod('post'))
         {
             $parameters = $request->except(['_token']);
 
-            if($parameters['image'] == null)
-                $parameters['image'] = 'null';
-            if($parameters['description'] == null)
-                $parameters['description'] = 'null';
             if($parameters['regular'] == 'off')
                 $parameters['regular'] = 0;
             else
                 $parameters['regular'] = 1;
+
+            $path = 'products/images/' . Auth::user()->id;
+            $file = $request->file('image');
+            if($request->hasFile('image')){
+                $fileName = $request->file('image')->getClientOriginalName();
+                $file->move($path, $fileName);
+                $product->image = $fileName;
+
+                if($image != "default.png"){
+                    File::delete("products/images/". Auth::user()->id . "/" . $image);
+                }
+            } else {
+
+            }
+
 
             $product->name = $parameters['name'];
             $product->category_id = $parameters['category_id'];
@@ -118,7 +125,7 @@ class ProductController extends Controller
             $product->regular = $parameters['regular'];
             $product->alert = $parameters['alert'];
             $product->description = $parameters['description'];
-            $product->image = $parameters['image'];
+
 
             $product->save();
 

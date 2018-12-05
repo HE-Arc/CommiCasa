@@ -45,9 +45,9 @@
                 <img src=" {{ URL::to('/products/images/default.png')}}" alt="" height="200" width="200">
             @endif
             <div class="form-group">
-                <label for="image"></label> <br>
+                <label for="image">Image</label> <br>
                 <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg"
-                       value="">
+                       value="{{isset($product) ? $product->image : ""}}">
             </div>
 
 
