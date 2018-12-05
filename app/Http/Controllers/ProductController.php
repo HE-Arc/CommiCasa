@@ -2,13 +2,13 @@
 
 namespace CommiCasa\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Category;
 use CommiCasa\Shopping;
 use Auth;
-use Intervention\Image\ImageManagerStatic as Image;
-
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -132,6 +132,12 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $product = Product::find($id);
+        
+        $image = $product->image;
+
+        if($image != "default.png"){
+            File::delete("products/images/". Auth::user()->id . "/" . $image);
+        }
         $product->delete();
         return redirect()->route('listProduct')->with('success', 'Product was deleted');
     }
