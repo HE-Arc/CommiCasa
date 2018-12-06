@@ -78,7 +78,6 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            $this->checkRegular($product->id);
             return redirect()->route('listProduct')->with('success', __('Product has been add !'));
         }
         else
@@ -87,7 +86,6 @@ class ProductController extends Controller
             {
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
-                $this->checkRegular($product->id);
             }
             return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
         }
@@ -103,14 +101,20 @@ class ProductController extends Controller
         {
             $parameters = $request->except(['_token']);
 
-            if($parameters['image'] == null)
-                $parameters['image'] = 'null';
-            if($parameters['description'] == null)
-                $parameters['description'] = 'null';
             if($parameters['regular'] == 'off')
                 $parameters['regular'] = 0;
             else
                 $parameters['regular'] = 1;
+
+            $path = 'products/images/' . Auth::user()->id;
+            $file = $request->file('image');
+
+            if($request->hasFile('image')){
+                $fileName = $request->file('image')->getClientOriginalName();
+                $file->move($path, $fileName);
+            } else {
+                $fileName = "default.png";
+            }
 
             $product->name = $parameters['name'];
             $product->category_id = $parameters['category_id'];
@@ -118,11 +122,10 @@ class ProductController extends Controller
             $product->regular = $parameters['regular'];
             $product->alert = $parameters['alert'];
             $product->description = $parameters['description'];
-            $product->image = $parameters['image'];
+            $product->image = $fileName;
 
             $product->save();
 
-            $this->checkRegular($id);
             return redirect()->route('listProduct')->with('success', 'Product has been updated');
         }
 
@@ -136,17 +139,19 @@ class ProductController extends Controller
         return redirect()->route('listProduct')->with('success', 'Product was deleted');
     }
 
-    public function checkRegular($id)
+    public static function checkRegular($id)
     {
-        $product = Product::find($id);
-        if($product->regular != 0)
+        $shopID = Shopping::where('product_id', $id)->first();
+        if(!isset($shopID))
         {
-            if($product->alert > $product->quantity || $product->quantity == 0)
-            {
-                $shopping = new Shopping();
-                $shopping->product_id = $product->id;
-                $shopping->user_id =  Auth::user()->id;
-                $shopping->save();
+            $product = Product::find($id);
+            if ($product->regular != 0) {
+                if ($product->alert > $product->quantity || $product->quantity == 0) {
+                    $shopping = new Shopping();
+                    $shopping->product_id = $product->id;
+                    $shopping->user_id = Auth::user()->id;
+                    $shopping->save();
+                }
             }
         }
     }
