@@ -15,9 +15,10 @@ class CreateListRecipesTable extends Migration
     {
         Schema::create('list_recipes', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('user_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
         Schema::table('list_recipes', function ($table) {
