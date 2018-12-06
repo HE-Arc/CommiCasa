@@ -2,13 +2,13 @@
 
 namespace CommiCasa\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use CommiCasa\Product;
 use CommiCasa\Category;
 use CommiCasa\Shopping;
 use Auth;
-use Intervention\Image\ImageManagerStatic as Image;
-
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -32,10 +32,6 @@ class ProductController extends Controller
 
     public function validProduct(Request $request)
     {
-        $parameters = $request->except('_token');
-
-        //var_dump($parameters); die;
-
         if($request['regular'] == 'off')
             $request['regular'] = 0;
         else
@@ -96,7 +92,7 @@ class ProductController extends Controller
         //var_dump($request); die;
         $categories = Category::All();
         $product = Product::find($id);
-
+        $image = $product['image'];
         if($request->isMethod('post'))
         {
             $parameters = $request->except(['_token']);
@@ -112,8 +108,11 @@ class ProductController extends Controller
             if($request->hasFile('image')){
                 $fileName = $request->file('image')->getClientOriginalName();
                 $file->move($path, $fileName);
-            } else {
-                $fileName = "default.png";
+                $product->image = $fileName;
+
+                if($image != "default.png"){
+                    File::delete("products/images/". Auth::user()->id . "/" . $image);
+                }
             }
 
             $product->name = $parameters['name'];
@@ -122,7 +121,9 @@ class ProductController extends Controller
             $product->regular = $parameters['regular'];
             $product->alert = $parameters['alert'];
             $product->description = $parameters['description'];
+
             $product->image = $fileName;
+
 
             $product->save();
 
@@ -135,6 +136,12 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $product = Product::find($id);
+        
+        $image = $product->image;
+
+        if($image != "default.png"){
+            File::delete("products/images/". Auth::user()->id . "/" . $image);
+        }
         $product->delete();
         return redirect()->route('listProduct')->with('success', 'Product was deleted');
     }

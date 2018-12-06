@@ -14,9 +14,13 @@
                 <th>@lang('Action')</th>
             </tr>
             @foreach($products as $product)
+<<<<<<< HEAD
 
                 {{\CommiCasa\Http\Controllers\ProductController::checkRegular($product->id)}}
 
+=======
+            <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+>>>>>>> 331b84d79576ff8dbc7e7422287e6f4c4747488f
                 @if($product->quantity == 0)
                     <tr bgcolor="#FC5D5D" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                 @elseif($product->alert >= $product->quantity)
@@ -26,7 +30,7 @@
                 @endif
 
                 <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">
-                    @if($product->image!= "default.png")
+                    @if($product->image != "default.png")
                         <img src="products/images/{{Auth::user()->id}}/{{$product->image}}" alt="" height="75" width="75">
                     @else
                         <img src="products/images/default.png" alt="" height="75" width="75">

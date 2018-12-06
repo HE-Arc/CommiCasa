@@ -9,34 +9,20 @@
             <label for="name">Name</label>
             <input type="text" name="name" id="name" placeholder="Enter a name" class="form-control" required>
         </div>
-        <input type="hidden" name="count" value="1" />
-        <div class="form-group">
-            <label for="fieldsB">Select Ingredients</label>
-            <div class="control-group" name='products' id="fieldsB">
-                <div id="field1B" class="input-group">
-                    <select id="fieldSel1B" class="custom-select">
-                        @foreach($products as $product)
-                        <option>{{$product->name}}</option>
-                        @endforeach
-                    </select>
-                    <button id="b1B" class="btn add-more" type="button">+</button>
-                </div>
-            </div>
-        </div>
 
         <div class="form-group">
             <input type="hidden" name="count" value="1" />
             <div class="control-group" id="fields">
-                <label class="control-label" for="field1">Ingrédients</label>
+                <label class="control-label" for="field1">Select Ingrédients</label>
                 <div class="input-group">
                     <div id="field">
                         <div id="field1">
-                            <select class="custom-select" name="prod1">
+                            <select class="custom-select" name="prod[]">
                                 @foreach($products as $product)
-                                <option>{{$product->name}}</option>
+                                <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <input id="numfield1" name="quant1" class="form-control" type="number" min="1" value="1">
+                            <input id="numfield1" name="quant[]" class="form-control" type="number" min="1" value="1">
                         </div>
                         <button id="b1" class="btn add-more" type="button">+</button>
                     </div>
@@ -67,13 +53,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var next = 1;
-        var options = '@foreach ($products as $product) <option>{{$product->name}}</option>@endforeach';
+        var options = '@foreach ($products as $product) <option value="{{$product->id}}">{{$product->name}}</option>@endforeach';
         $(".add-more").click(function(e) {
             e.preventDefault();
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<div id="field' + next + '"><select class="custom-select" name="prod' + next + '">' + options + '</select><input name="quant' + next + '" class="form-control" type="number" min="1" value="1"></div>';
+            var newIn = '<div id="field' + next + '"><select class="custom-select" name="prod[]">' + options + '</select><input name="quant[]" class="form-control" type="number" min="1" value="1"></div>';
             var newInput = $(newIn);
             var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
             var removeButton = $(removeBtn);
