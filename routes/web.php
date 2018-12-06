@@ -12,7 +12,11 @@
 */
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', [
+    'as' => 'index',
+    'uses' => 'HomeController@index',
+    'middelware' => 'auth'
+])->name('home');
 
 //Product Route
 Route::get('/product', [
@@ -40,10 +44,25 @@ Route::match(['get', 'post'], '/product/{id}', [
     'uses' => 'ProductController@editProduct'
 ]);
 
+Route::get('/product/delete/{id}', [
+    'as' => 'deleteProduct',
+    'uses' => 'ProductController@deleteProduct'
+]);
+
 //Shopping List
 Route::get('/shopping', [
     'as' => 'listShopping',
-    'uses' => 'ProductController@listShopping'
+    'uses' => 'ShoppingController@listShopping'
+]);
+
+Route::post('/shopping', [
+    'as' => 'addShopping',
+    'uses' => 'ShoppingController@addShopping'
+]);
+
+Route::post('/deleteShopping', [
+    'as' => 'deleteShopping',
+    'uses' => 'ShoppingController@deleteShopping'
 ]);
 
 //Categories Route
@@ -62,7 +81,6 @@ Route::match(['get', 'post'], '/category/update/{id}', [
     'uses' => 'CategoryController@updateCategory'
 ]);
 
-
 Route::get('/category/delete/{id}', [
     'as' => 'deleteCategory',
     'uses' => 'CategoryController@deleteCategory'
@@ -77,6 +95,7 @@ Route::post('/category/create', [
     'as' => 'createCategory',
     'uses' => 'CategoryController@createCategory'
 ]);
+
 Route::get('/recipe', [
     'as' => 'listRecipe',
     'uses' => 'RecipeController@listRecipe'

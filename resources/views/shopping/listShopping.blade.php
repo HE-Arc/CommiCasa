@@ -4,8 +4,7 @@
     <div class="container">
         <h1> Shopping List</h1>
 
-        <button class="btn btn-info" onclick="location.href='{{route('addProduct')}}'">Add Product</button>
-
+        @if(count($products) > 0)
         <table class="table table-hover">
             <tr>
                 <th>@lang('Image')</th>
@@ -27,8 +26,16 @@
                             <button name="quantity" value="1" class="btn btn-sm btn-sm btn-primary">+1</button>
                             <button name="quantity" value="-1" class="btn btn-sm btn-sm btn-primary">-1</button>
                         </form>
+                        <form action="{{ route('deleteShopping') }}" method="POST">
+                            @csrf
+                            <input type='hidden' value='{{$product->id}}' name='product_id'>
+                            <button name="quantity" value="-1" class="btn btn-sm btn-sm btn-danger">Delete</button>
+                        </form>
                 </tr>
             @endforeach
         </table>
+        @else
+            <h5>@lang("No shopping list available !")</h5>
+        @endif
     </div>
 @endsection

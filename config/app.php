@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -159,7 +160,6 @@ return [
         // CommiCasa\Providers\BroadcastServiceProvider::class,
         CommiCasa\Providers\EventServiceProvider::class,
         CommiCasa\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -208,7 +208,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
     ],
 
 ];

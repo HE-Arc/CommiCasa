@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShoppingTable extends Migration
+class CreateShoppingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateShoppingTable extends Migration
      */
     public function up()
     {
-        Schema::create('shopping', function (Blueprint $table) {
+        Schema::create('shoppings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
+            $table->integer('user_id')->unsigned();
 
             $table->timestamps();
         });
 
-        Schema::table('shopping', function($table) {
+        Schema::table('shoppings', function($table) {
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ class CreateShoppingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shopping');
+        Schema::dropIfExists('shoppings');
     }
 }

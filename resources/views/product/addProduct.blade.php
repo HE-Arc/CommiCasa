@@ -4,7 +4,7 @@
     <div class="container">
         <h1> {{isset($product) ? 'Edit' : 'Add'}} Product</h1>
 
-        <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}">
+        <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}"  enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
@@ -29,8 +29,8 @@
 
             <div class="form-group">
                 <label for="quantity">Quantity</label>
-                <input type="number" name="quantity" id="quantity" class="form-control" min="1"
-                       value="{{isset($product) ? $product->quantity: '1'}}">
+                <input type="number" name="quantity" id="quantity" class="form-control" min="0"
+                       value="{{isset($product) ? $product->quantity: '0'}}">
             </div>
 
             <div class="form-group">
@@ -39,11 +39,17 @@
                        value="{{isset($product) ? $product->alert: '0'}}">
             </div>
 
+            @if(isset($product) && $product->image != "default.png")
+                <img src={{URL::to("products/images/". Auth::user()->id."/".$product->image)}} alt="" height="200" width="200">
+            @else
+                <img src=" {{ URL::to('/products/images/default.png')}}" alt="" height="200" width="200">
+            @endif
             <div class="form-group">
-                <label for="image">Image</label>
+                <label for="image">Image</label> <br>
                 <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg"
-                       value="{{isset($product) ? $product->image: ''}}">
+                       value="{{isset($product) ? $product->image : ""}}">
             </div>
+
 
             <div class="form-group">
                 <label for="description">Description</label>
@@ -67,5 +73,10 @@
                 <button type="submit" class="btn btn-info"> {{isset($product) ? 'Edit Product' : 'Add Product'}}</button>
             </div>
         </form>
+        <div style="{{isset($product) ? '' : 'display: none;'}}" >
+            <button  class="btn btn-danger" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
+        </div>
     </div>
+
+
 @endsection

@@ -24,8 +24,8 @@ class CreateProductsTable extends Migration
             $table->boolean('regular');
             $table->integer('alert');
 
-            $table->string('description');
-            $table->string('image');
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
 
             $table->timestamps();
         });
