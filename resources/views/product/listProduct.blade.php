@@ -41,8 +41,8 @@
                                     <img src="products/images/default.png" alt="" height="75" width="75">
                                 @endif
                             </td>
-                            <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->name}}</td>
-                            <td class="clickable align-middle" href="#" data-id="{{ $product->id }}">{{ $product->quantity}}</td>
+                            <td class="align-middle" >{{ $product->name}}</td>
+                            <td class="align-middle" >{{ $product->quantity}}</td>
                             <td class="buttons align-middle text-justify">
                                 <div class="row float-left">
                             <form action="{{ route('updateProduct') }}" method="POST">
@@ -66,7 +66,8 @@
                                 <input type='hidden' value='{{$product->id}}' name='product_id'>
                                 <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
                             </form>
-                                </div>
+                            </div>
+                            </td>
                         </tr>
                     @endif
                 @endforeach

@@ -7,6 +7,7 @@ use CommiCasa\Recipe;
 use CommiCasa\ListRecipe;
 use Auth;
 use CommiCasa\Product;
+use Illuminate\Support\Facades\File;
 
 class RecipeController extends Controller
 {
@@ -105,22 +106,31 @@ class RecipeController extends Controller
             $recipeList->save();
 
             $paramRecipe = $tempRequest->except('_token', 'count', 'name', 'description', 'image');
+
             $recipeArray = Recipe::where('name_recipe_id', $id)->get();
-            $recipeArray->delete();
+
+            for ($i=0;$i<count($paramRecipe['prodID']);$i++) {
+                foreach ($recipeArray as $rec) {
+                    if ($rec['id']==$paramRecipe['prodID'][$i]) {
+                        $rec->quantity_required = $paramRecipe['quantMod'][$i];
+                        $rec->save();
+                    }
+                }
+            }
             for ($i=0;$i<count($paramRecipe['prod']);$i++) {
                 Recipe::create([
                     'user_id' => $paramRecipe['user_id'],
                     'product_id' => $paramRecipe['prod'][$i],
-                    'name_recipe_id' => $recipeID->id,
+                    'name_recipe_id' => $recipeList->id,
                     'quantity_required' => $paramRecipe['quant'][$i]
                 ]);
             }
             return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
         }
-        return view('product/addProduct', compact('products', 'recipeList', 'recipes'));
+        return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'));
     }
 
-    public function deleteProduct($id)
+    public function deleteRecipeList($id)
     {
         $recipeList = ListRecipe::find($id);
 
@@ -130,7 +140,17 @@ class RecipeController extends Controller
             File::delete("recipes/images/". Auth::user()->id . "/" . $image);
         }
         $recipeList->delete();
-        return redirect()->route('listRecipe')->with('success', 'Recipe was deleted');
+        return redirect()->route('listRecipe')->with('success', 'RecipeList was deleted');
+    }
+
+    public function deleteRecipe(Request $request)
+    {
+        var_dump($request);
+        die;
+        $recipe = Recipe::find($request['recipe_id']);
+        $newId = $recipe->name_recipe_id;
+        $recipe->delete();
+        return redirect()->route('editRecipe', ['id'=>$newId]);
     }
 
     public function backWithMessage($type, $message)

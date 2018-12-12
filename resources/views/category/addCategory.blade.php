@@ -15,10 +15,5 @@
                 <button type="submit" class="btn btn-info">{{isset($category) ? 'Update' : 'Add'}}</button>
             </div>
         </form>
-
-        <div style="{{isset($category) ? '' : 'display: none;'}}" >
-            <button  class="btn btn-danger" onclick="window.location.href='{{isset($category) ? route('deleteCategory', ['id' => $category->id]) : ''}}'">Delete this category</button>
-        </div>
-
     </div>
 @endsection

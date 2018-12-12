@@ -12,6 +12,8 @@
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$listRecipe->id}}" aria-expanded="false" aria-controls="collapse{{$listRecipe->id}}">
                         {{$listRecipe->name}}
                     </button>
+                    <button class="btn " onclick="location.href='{{route('editRecipe', ['id' => $listRecipe->id])}}'">Edit</button>
+                    <button class="btn btn-danger" onclick="location.href='{{route('deleteRecipeList', ['id' => $listRecipe->id])}}'">Delete</button>
                 </h5>
             </div>
             <div id="collapse{{$listRecipe->id}}" class="collapse" aria-labelledby="heading{{$listRecipe->id}}" data-parent="#accordion">
@@ -27,7 +29,9 @@
                         <div>
                             <table>
                                 <tr>
-                                    {{$listRecipe->description}}
+                                    <td>
+                                        <p>{{$listRecipe->description}}</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <table>

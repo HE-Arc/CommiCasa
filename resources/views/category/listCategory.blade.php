@@ -10,11 +10,18 @@
             <tr>
                 <td><strong>@lang('#')</strong></td>
                 <td><strong>@lang('Name')</strong></td>
+                <td><strong>@lang('Delete')</strong></td>
             </tr>
             @foreach($categories as $category)
                 <tr onclick="location.href='{{route('updateCategory', ['id' => $category->id])}}'">
                     <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
+                    <td>
+                            <form action="{{route('deleteCategory', ['id' => $category->id])}}" method="POST">
+                            @csrf
+                            <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </table>

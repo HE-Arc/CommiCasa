@@ -27,9 +27,10 @@
 
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel ">
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel " >
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="images/logo.jpg" alt="" height="50">
                         CommiCasa
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -98,12 +99,13 @@
                 @yield('content')
             </main>
             <br>
-            <hr class="container marketing" >
-            <footer class="container marketing" bottom="0" >
-                <p class="float-right"><a href="#">Back to the top</a></p>
-                <p>@ 2018 He-Arc, Luca-Julien-Jeremy</p>
-            </footer>
         </div>
+
+        <hr class="container marketing" >
+        <footer class="container marketing" bottom="0" >
+            <p class="float-right"><a href="#">Back to the top</a></p>
+            <p>@ 2018 He-Arc, Luca-Julien-Jeremy</p>
+        </footer>
 
     </body>
 

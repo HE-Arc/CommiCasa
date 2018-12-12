@@ -86,7 +86,7 @@ Route::match(['get', 'post'], '/category/update/{id}', [
     'uses' => 'CategoryController@updateCategory'
 ]);
 
-Route::get('/category/delete/{id}', [
+    Route::post('/category/delete/{id}', [
     'as' => 'deleteCategory',
     'uses' => 'CategoryController@deleteCategory'
 ]);
@@ -112,11 +112,6 @@ Route::get('/recipe/add', [
     'uses' => 'RecipeController@addRecipe'
 ]);
 
-Route::get('/recipe/show', [
-    'as' => 'showRecipe',
-    'uses' => 'RecipeController@showRecipe'
-]);
-
 Route::post('/recipe/validate', [
     'as' => 'validateRecipe',
     'uses' => 'RecipeController@validRecipe'
@@ -124,10 +119,15 @@ Route::post('/recipe/validate', [
 
 Route::match(['get', 'post'], '/recipe/{id}', [
     'as' => 'editRecipe',
-    'uses' => 'ProductController@editRecipe'
+    'uses' => 'RecipeController@editRecipe'
 ]);
 
 Route::get('/recipe/delete/{id}', [
+    'as' => 'deleteRecipeList',
+    'uses' => 'RecipeController@deleteRecipeList'
+]);
+
+Route::post('/delete/recipe/', [
     'as' => 'deleteRecipe',
-    'uses' => 'ProductController@deleteRecipe'
+    'uses' => 'RecipeController@deleteRecipe'
 ]);
