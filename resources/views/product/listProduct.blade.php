@@ -1,11 +1,19 @@
 @extends('layouts.app')
 @section('content')
+    @if (session('update'))
+        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong> {{ session('update') }} </strong>
+        </div>
+    @endif
 <div class="container">
     <h1> Product List</h1>
         <button class="btn btn-info" onclick="location.href='{{route('addProduct')}}'">Add Product</button>
+    <hr>
         @if(count($products) > 0)
         @foreach($categories as $category)
-            <h1>{{$category->name}}</h1>
+            <h2 class="display-8">{{$category->name}}</h2>
+
         <table class="table table-hover">
             <tr>
                 <th>@lang('Image')</th>

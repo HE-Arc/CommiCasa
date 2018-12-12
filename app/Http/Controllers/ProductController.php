@@ -63,7 +63,7 @@ class ProductController extends Controller
         $product->save();
         $this->checkRegular($product->id);
 
-        return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+        return redirect()->route('listProduct')->with('update', 'Content has been updated successfully!');
     }
 
     public function updateProduct(Request $request)
@@ -75,7 +75,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+            return $this->backWithMessage('success', 'Product has been add !');
         }
         else
         {
@@ -84,7 +84,7 @@ class ProductController extends Controller
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
             }
-            return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
+            return $this->backWithMessage('success', 'Product has been remove !');
         }
     }
 
