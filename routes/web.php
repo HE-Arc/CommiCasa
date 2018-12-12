@@ -49,6 +49,11 @@ Route::get('/product/delete/{id}', [
     'uses' => 'ProductController@deleteProduct'
 ]);
 
+Route::post('/delete', [
+    'as' => 'deleteProductOnList',
+    'uses' => 'ProductController@deleteProductOnList'
+]);
+
 //Shopping List
 Route::get('/shopping', [
     'as' => 'listShopping',
@@ -81,7 +86,7 @@ Route::match(['get', 'post'], '/category/update/{id}', [
     'uses' => 'CategoryController@updateCategory'
 ]);
 
-Route::get('/category/delete/{id}', [
+    Route::post('/category/delete/{id}', [
     'as' => 'deleteCategory',
     'uses' => 'CategoryController@deleteCategory'
 ]);

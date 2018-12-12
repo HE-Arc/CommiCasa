@@ -47,9 +47,9 @@
             @endif
             <div class="form-group">
                 <label for="image">Image</label> <br>
-                <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg">
+                <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg"
+                       value="{{isset($product) ? $product->image : 'default.png'}}">
             </div>
-
 
             <div class="form-group">
                 <label for="description">Description</label>
