@@ -20,7 +20,8 @@ class ProductController extends Controller
     public function listProduct()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
-        return view('product/listProduct', compact('products'));
+        $categories = Category::where('user_id', Auth::user()->id)->get();
+        return view('product/listProduct', compact('products', 'categories'));
     }
 
     public function addProduct()
