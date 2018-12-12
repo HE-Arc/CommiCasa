@@ -86,7 +86,7 @@ Route::match(['get', 'post'], '/category/update/{id}', [
     'uses' => 'CategoryController@updateCategory'
 ]);
 
-Route::get('/category/delete/{id}', [
+    Route::post('/category/delete/{id}', [
     'as' => 'deleteCategory',
     'uses' => 'CategoryController@deleteCategory'
 ]);
