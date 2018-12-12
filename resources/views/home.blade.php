@@ -3,15 +3,21 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-3">Hello <strong>{{Auth::user()->name}}</strong>, bienvenu sur CommiCasa </h1>
-            <p>Apprenez à ne plus oublier ce que vous devez acheter dans votre maison</p>
+            @if (isset(Auth::user()->name))
+                <h1 class="display-3">Hello <strong>{{Auth::user()->name}}</strong> </h1>
+                <p>Apprenez à ne plus oublier ce que vous devez acheter dans votre maison</p>
+                @else
+                <h1 class="display-3">Bienvenu sur CommiCasa </h1>
+                <p>Apprenez à ne plus oublier ce que vous devez acheter dans votre maison</p>
+                <p><button class="btn-secondary" onclick="window.location.href='{{route('login')}}'">Login</button></p>
+                <p><button class="btn-secondary" onclick="window.location.href='{{route('register')}}'">>Register</button></p>
+                @endif
         </div>
 
     </div>
     <div class="container">
         <div class="row justify-content-center">
             <hr>
-
             <div class="container marketing">
                 <div class="row justify-content-center" align="center">
                     <div class="col-lg-4">
@@ -106,27 +112,6 @@
                         <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
                     </div>
                 </div>
-
-
-            </div>
-
-
-            <!--
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Dashboard</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        You are logged in!
-                    </div>
-                    -->
-            </div>
 
         </div>
     </div>
