@@ -20,7 +20,8 @@ class ProductController extends Controller
     public function listProduct()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
-        return view('product/listProduct', compact('products'));
+        $categories = Category::where('user_id', Auth::user()->id)->get();
+        return view('product/listProduct', compact('products', 'categories'));
     }
 
     public function addProduct()
@@ -62,7 +63,7 @@ class ProductController extends Controller
         $product->save();
         $this->checkRegular($product->id);
 
-        return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+        return redirect()->route('listProduct')->with('update', 'Content has been updated successfully!');
     }
 
     public function updateProduct(Request $request)
@@ -74,7 +75,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            return redirect()->route('listProduct')->with('success', __('Product has been add !'));
+            return $this->backWithMessage('success', 'Product has been add !');
         }
         else
         {
@@ -83,7 +84,7 @@ class ProductController extends Controller
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
             }
-            return redirect()->route('listProduct')->with('success', __('Product has been remove !'));
+            return $this->backWithMessage('success', 'Product has been remove !');
         }
     }
 
@@ -133,13 +134,20 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
-        $product = Product::find($id);
+        $product = Product::where('id', $id)->first();
         
         $image = $product->image;
 
         if($image != "default.png"){
             File::delete("products/images/". Auth::user()->id . "/" . $image);
         }
+        $product->delete();
+        return redirect()->route('listProduct')->with('success', 'Product was deleted');
+    }
+
+    public function deleteProductOnList(Request $request)
+    {
+        $product = Product::find($request['product_id']);
         $product->delete();
         return redirect()->route('listProduct')->with('success', 'Product was deleted');
     }
