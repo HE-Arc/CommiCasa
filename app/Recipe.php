@@ -10,6 +10,6 @@ class Recipe extends Model
         'user_id',
         'product_id',
         'name_recipe_id',
-        'quantity'
+        'quantity_required'
     ];
 }

@@ -18,7 +18,7 @@ class CreateRecipesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('name_recipe_id')->unsigned();
-            $table->integer('quantity');
+            $table->integer('quantity_required');
 
             $table->timestamps();
         });
