@@ -11,66 +11,78 @@
         </div>
 
         <div class="form-group">
+            @if (isset($recipeList))
+            <div class="control-group">
+                <label class="control-label" for="tabProd">Old Ingrédients</label>
+                <table class="table table-hover" id="tabProd">
+                    <tr>
+                        <th>
+                            @lang('Product')</th>
+                        <th>
+                            @lang('Quantity Required')</th>
+                        <th>
+                            @lang('Delete From Recipe')</th>
+                    </tr>
+                    @foreach ($recipes as $recipe)
+                    <tr>
+                        <input type="hidden" name="prodID[]" value="{{$recipe->id}}">
+                        <td>
+                            {{$recipe->product_id}}
+                        </td>
+                        <td>
+                            <input name="quantMod[]" class="form-control" type="number" min="1" value="{{$recipe->quantity_required}}">
+                        </td>
+                        <td>
+                            <form method="post" action="{{route('deleteRecipe')}}">
+                                @csrf
+                                <input type='hidden' value='{{$recipe->id}}' name='recipe_id'>
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
 
-            <div class="control-group" id="fields">
-                <label class="control-label" for="field1">Select Ingrédients</label>
+            @endif
+            <div class="control-group details" id="fields" @if (isset($recipeList))style="display:none"@endif>
+                <label class="control-label" for="field">Select {{isset($recipeList) ? 'New' : ''}} Ingrédients</label>
                 <div class="input-group">
                     <div id="field">
-                        @php($i=1)
-                        @if(@isset($recipeList))
-                        @foreach ($recipes as $recipe)
-                        <div id="field{{$i}}">
-                            <select class="custom-select" name="prod[]">
-                                @foreach($products as $product)
-                                <option value="{{$product->id}}" @if($recipe->product_id == $product->id))
-                                    selected
-                                    @endif
-                                    >{{$product->name}}></option>
-                                @endforeach
-                            </select>
-                            <input id="numfield{{$i}}" name="quant[]" class="form-control" type="number" min="1" value="1">
-                        </div>
-                        @if($recipe != end($recipes))
-                        <button id="remove{{$i}}" class="btn btn-danger remove-me">-</button>
-                        @endif
-                        @php($i++)
-                        @endforeach
-                        @else
                         <div id="field1">
                             <select class="custom-select" name="prod[]">
                                 @foreach($products as $product)
-                                <option value="{{$product->id}}">{{$product->name}}></option>
+                                <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
                             <input id="numfield1" name="quant[]" class="form-control" type="number" min="1" value="1">
                         </div>
-                        @endif
                         <button id="b1" class="btn add-more" type="button">+</button>
                     </div>
                 </div>
-            </div>
-            <input type="hidden" name="count" value="{{$i}}" />
         </div>
+        @if (isset($recipeList))
+        <a id="more" href="#" onclick="$('.details').slideToggle(function(){$('#more').html($('.details').is(':visible')?'Don\'t Add More Ingredients':'Add More Ingredients');});">Add More Ingredients</a>
+        @endif
+        <input type="hidden" name="count" value="1" />
+</div>
 
-        <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg">
-        </div>
+<div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg">
+</div>
 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe your recipe...">{{isset($recipeList) ? $recipeList->description : ''}}</textarea>
-        </div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe your recipe...">{{isset($recipeList) ? $recipeList->description : ''}}</textarea>
+</div>
 
-        <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
+<input type='hidden' value={{ Auth::user()->id }} name='user_id'>
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-info"> {{isset($recipeList) ? 'Edit' : 'Add'}} Recipe</button>
-        </div>
-    </form>
-    <div style="{{isset($recipeList) ? '' : 'display: none;'}}">
-        <button class="btn btn-danger" onclick="location.href='{{isset($recipeList) ? route('deleteRecipe', ['id' => $recipeList->id]) : ''}}'">Delete this recipe</button>
-    </div>
+<div class="form-group">
+    <button type="submit" class="btn btn-info"> {{isset($recipeList) ? 'Edit' : 'Add'}} Recipe</button>
+</div>
+</form>
 </div>
 
 <script type="text/javascript">
@@ -98,11 +110,7 @@
                 $(this).remove();
                 $(fieldID).remove();
             });
-            $(".add_prod").
         });
-
-
-
     });
 </script>
 @endsection
