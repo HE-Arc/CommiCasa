@@ -8,8 +8,8 @@
         @if(count($categories) > 0)
         <table class="table table-hover">
             <tr>
-                <td>#</td>
-                <td>Name</td>
+                <td><strong>@lang('#')</strong></td>
+                <td><strong>@lang('Name')</strong></td>
             </tr>
             @foreach($categories as $category)
                 <tr onclick="location.href='{{route('updateCategory', ['id' => $category->id])}}'">

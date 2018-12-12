@@ -122,8 +122,6 @@ class ProductController extends Controller
             $product->alert = $parameters['alert'];
             $product->description = $parameters['description'];
 
-            $product->image = $fileName;
-
 
             $product->save();
 

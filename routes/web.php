@@ -14,9 +14,9 @@ Auth::routes();
 
 Route::get('/', [
     'as' => 'index',
-    'uses' => 'HomeController@index',
-    'middelware' => 'auth'
+    'uses' => 'HomeController@index'
 ])->name('home');
+
 
 //Product Route
 Route::get('/product', [
@@ -101,6 +101,7 @@ Route::post('/category/create', [
     'uses' => 'CategoryController@createCategory'
 ]);
 
+//Recipes Route
 Route::get('/recipe', [
     'as' => 'listRecipe',
     'uses' => 'RecipeController@listRecipe'
@@ -119,4 +120,14 @@ Route::get('/recipe/show', [
 Route::post('/recipe/validate', [
     'as' => 'validateRecipe',
     'uses' => 'RecipeController@validRecipe'
+]);
+
+Route::match(['get', 'post'], '/recipe/{id}', [
+    'as' => 'editRecipe',
+    'uses' => 'ProductController@editRecipe'
+]);
+
+Route::get('/recipe/delete/{id}', [
+    'as' => 'deleteRecipe',
+    'uses' => 'ProductController@deleteRecipe'
 ]);

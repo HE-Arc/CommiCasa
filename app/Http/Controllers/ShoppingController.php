@@ -23,7 +23,7 @@ class ShoppingController extends Controller
         AND (`shoppings`.`user_id` = '1')
          */
         $products =Shopping::from('shoppings as s')
-                ->join('products as p','p.id','=','s.product_id')
+                ->join('products as p', 'p.id', '=', 's.product_id')
                 ->select('p.*')
                 ->where('p.user_id', Auth::user()->id)
                 ->get();
@@ -42,7 +42,7 @@ class ShoppingController extends Controller
 
     public function deleteShopping(Request $request)
     {
-        $shopping = Shopping::where('product_id',$request['product_id'])->first();
+        $shopping = Shopping::where('product_id', $request['product_id'])->first();
         $shopping->delete();
         return redirect()->route('listShopping')->with('success', __('Product has been remove to shopping list !'));
     }

@@ -25,8 +25,8 @@
 
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-                <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel ">
+                <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         CommiCasa
                     </a>
@@ -92,10 +92,17 @@
                 </div>
             </nav>
 
-            <main class="py-4">
+            <main class="py-1">
                 @yield('content')
             </main>
+            <br>
+            <hr class="container marketing" >
+            <footer class="container marketing" bottom="0" >
+                <p class="float-right"><a href="#">Back to the top</a></p>
+                <p>@ 2018 He-Arc, Luca-Julien-Jeremy</p>
+            </footer>
         </div>
+
     </body>
 
 </html>

@@ -18,7 +18,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div>
-                            {{$listRecipe->image}}
+                            @if($listRecipe->image != "default.png")
+                                <img src="products/images/{{Auth::user()->id}}/{{$listRecipe->image}}" alt="" height="75" width="75">
+                                @else
+                                <img src="products/images/default.png" alt="" height="75" width="75">
+                                @endif
                         </div>
                         <div>
                             <table>
@@ -27,11 +31,11 @@
                                 </tr>
                                 <tr>
                                     <table>
-                                        @foreach ($recipes as $recipe)
-                                        @if ($recipe->name_recipe_id==$listRecipe->id)
+                                        @foreach ($products as $product)
+                                        @if ($product->name_recipe_id==$listRecipe->id)
                                         <tr>
-                                            <td>{{$recipe->product_id}}</td>
-                                            <td>{{$recipe->quantity}}</td>
+                                            <td>{{$product->name}}</td>
+                                            <td>{{$product->quantity_required}}</td>
                                         </tr>
                                         @endif
                                         @endforeach

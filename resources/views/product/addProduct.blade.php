@@ -39,10 +39,11 @@
                        value="{{isset($product) ? $product->alert: '0'}}">
             </div>
 
-            @if(isset($product) && $product->image != "default.png")
+            @if(isset($product))
                 <img src={{URL::to("products/images/". Auth::user()->id."/".$product->image)}} alt="" height="200" width="200">
-            @else
+            @elseif (isset($product) && $product->image == "default.png")
                 <img src=" {{ URL::to('/products/images/default.png')}}" alt="" height="200" width="200">
+            @else
             @endif
             <div class="form-group">
                 <label for="image">Image</label> <br>
