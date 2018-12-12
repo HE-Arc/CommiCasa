@@ -14,7 +14,9 @@
                 <th>@lang('Action')</th>
             </tr>
             @foreach($products as $product)
+                {{\CommiCasa\Http\Controllers\ProductController::checkRegular($product->id)}}
             <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+
                 @if($product->quantity == 0)
                     <tr bgcolor="#FC5D5D" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                 @elseif($product->alert >= $product->quantity)

@@ -14,9 +14,9 @@ Auth::routes();
 
 Route::get('/', [
     'as' => 'index',
-    'uses' => 'HomeController@index',
-    'middelware' => 'auth'
+    'uses' => 'HomeController@index'
 ])->name('home');
+
 
 //Product Route
 Route::get('/product', [
