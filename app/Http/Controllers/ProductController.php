@@ -169,6 +169,15 @@ class ProductController extends Controller
         }
     }
 
+    public static function checkIfProductIsInShopping($id)
+    {
+        $shopID = Shopping::where('product_id', $id)->first();
+        if(!isset($shopID))
+            return false;
+        else
+            return true;
+    }
+
     public function backWithMessage($type, $message)
     {
         return back()->with($type, $message);
