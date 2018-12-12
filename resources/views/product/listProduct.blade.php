@@ -47,6 +47,11 @@
                     <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
                     <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary">Shopping</button>
                 </form>
+                <form action="{{ route('deleteProductOnList') }}" method="POST">
+                    @csrf
+                    <input type='hidden' value='{{$product->id}}' name='product_id'>
+                    <button class="btn btn-sm btn-sm btn-danger">Delete</button>
+                </form>
             </tr>
             @endforeach
         </table>
