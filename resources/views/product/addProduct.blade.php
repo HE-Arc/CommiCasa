@@ -73,9 +73,6 @@
                 <button type="submit" class="btn btn-info"> {{isset($product) ? 'Edit Product' : 'Add Product'}}</button>
             </div>
         </form>
-        <div style="{{isset($product) ? '' : 'display: none;'}}" >
-            <button  class="btn btn-danger" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
-        </div>
     </div>
 
 

@@ -35,13 +35,9 @@ Route::match(['get', 'post'], '/product/{id}', [
     'as' => 'editProduct',
     'uses' => 'ProductController@editProduct'
 ]);
-Route::get('/product/delete/{id}', [
+Route::post('/product/delete/{id}', [
     'as' => 'deleteProduct',
     'uses' => 'ProductController@deleteProduct'
-]);
-Route::post('/delete', [
-    'as' => 'deleteProductOnList',
-    'uses' => 'ProductController@deleteProductOnList'
 ]);
 
 //Shopping List
