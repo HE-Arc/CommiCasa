@@ -58,12 +58,6 @@ class CategoryController extends Controller
     public function createCategory(Request $request)
     {
         $parameters = $request->except(['_token']);
-
-//        //Database
-//        $category = new Category();
-//        $category->name = $parameters['name']
-//        $category->save();
-
         Category::create($parameters);
 
 

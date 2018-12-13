@@ -45,7 +45,6 @@
                             <p><button class="btn btn-secondary" onclick="window.location.href='{{route('listCategory')}}'">Créer des catégories</button></p>
                         </div>
                     </div>
-                    <hr>
                 </div>
             </div>
         @else
