@@ -1,11 +1,13 @@
 <?php
 namespace CommiCasa\Http\Controllers;
+
 use Illuminate\Http\Request;
 use CommiCasa\Recipe;
 use CommiCasa\ListRecipe;
 use Auth;
 use CommiCasa\Product;
 use Illuminate\Support\Facades\File;
+
 class RecipeController extends Controller
 {
     public function __construct()
@@ -25,7 +27,8 @@ class RecipeController extends Controller
     public function addRecipe()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
-        if ($products->count()==0) {
+
+        if (!isset($products)) {
             return view('recipe/listRecipe')->with('error', __('Create some products first!'));
         }
         return view('recipe/addRecipe', compact('products'));
@@ -36,8 +39,6 @@ class RecipeController extends Controller
     }
     public function validRecipe(Request $request)
     {
-
-
         $tempRequest = $request;
 
         $path = 'recipes/images/' . Auth::user()->id;
@@ -138,5 +139,4 @@ class RecipeController extends Controller
         $recipe->delete();
         return redirect()->route('editRecipe', $idRecipeList)->with('success delete', 'Recipe has been deleted');;
     }
-
 }
