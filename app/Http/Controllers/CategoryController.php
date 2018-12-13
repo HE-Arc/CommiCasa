@@ -20,18 +20,11 @@ class CategoryController extends Controller
         return view('category/listCategory')->with('categories', $categories);
     }
 
-    public function showCategory($id)
-    {
-        $category = Category::find($id);
-
-        return view('category/showCategory')->with('category', $category);
-    }
-
     public function deleteCategory($id)
     {
         $category = Category::find($id);
         $category->delete();
-        return redirect()->route('listCategory')->with('success', 'Category vas deleted');
+        return redirect()->route('listCategory')->with('success delete', $category['name'] . ' has been deleted');
     }
 
     public function updateCategory(Request $request, $id)
@@ -44,7 +37,7 @@ class CategoryController extends Controller
             //Database
             $category->name = $parameters['name'];
             $category->save();
-            return redirect()->route('listCategory')->with('success', 'Category vas updated');
+            return redirect()->route('listCategory')->with('success add', $request['name'] . ' has been updated');
         }
 
         return view('category/addCategory')->with('category', $category);
@@ -60,9 +53,7 @@ class CategoryController extends Controller
         $parameters = $request->except(['_token']);
         Category::create($parameters);
 
-
-        return redirect()->route('listCategory')->with('success', __('Category has been add !'));
-        //return redirect()->back()->with('message', 'IT WORKS!');
+        return redirect()->route('listCategory')->with('success add', 'Product has been added');
 
     }
 }

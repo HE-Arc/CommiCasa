@@ -96,6 +96,20 @@
             </nav>
 
             <main class="py-1">
+                <div class="container">
+                    @if (session('success add'))
+                        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong> {{ session('success add') }} </strong>
+                        </div>
+                    @elseif(session('success delete'))
+                    <div class="alert alert-danger alert-dismissable custom-success-box" style="margin: 15px;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong> {{ session('success delete') }} </strong>
+                    </div>
+                    @endif
+                </div>
+
                 @yield('content')
             </main>
             <br>
