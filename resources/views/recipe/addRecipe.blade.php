@@ -27,7 +27,7 @@
                     <tr>
                         <input type="hidden" name="prodID[]" value="{{$recipe->id}}">
                         <td>
-                            {{$recipe->product_id}}
+                            {{$recipe->name}}
                         </td>
                         <td>
                             <input name="quantMod[]" class="form-control" type="number" min="1" value="{{$recipe->quantity_required}}">

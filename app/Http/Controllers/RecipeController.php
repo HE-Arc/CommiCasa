@@ -84,7 +84,12 @@ class RecipeController extends Controller
         $products = Product::where('user_id', Auth::user()->id)->get();
 
         $recipeList = ListRecipe::find($id);
-        $recipes = Recipe::where('name_recipe_id', $id)->get();
+        $recipes = Recipe::from('recipes as r')
+            ->join('products as p', 'p.id', '=', 'r.product_id')
+            ->select('r.*', 'p.name')
+            ->where('name_recipe_id', $id)
+            ->get();
+
         $image = $recipeList['image'];
         if ($request->isMethod('post')) {
             $path = 'recipes/images/' . Auth::user()->id;

@@ -17,11 +17,12 @@ class CreateShoppingsTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('quantity_wanted')->unsigned();
 
             $table->timestamps();
         });
 
-        Schema::table('shoppings', function($table) {
+        Schema::table('shoppings', function ($table) {
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

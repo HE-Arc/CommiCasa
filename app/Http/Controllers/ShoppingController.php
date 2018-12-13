@@ -25,7 +25,7 @@ class ShoppingController extends Controller
          */
         $products =Shopping::from('shoppings as s')
                 ->join('products as p', 'p.id', '=', 's.product_id')
-                ->select('p.*')
+                ->select('p.*', 's.quantity_wanted')
                 ->where('p.user_id', Auth::user()->id)
                 ->get();
 
@@ -48,10 +48,20 @@ class ShoppingController extends Controller
         $recipes = Recipe::where('name_recipe_id', $param['idR'])->get();
 
         foreach ($recipes as $recipe) {
-            Shopping::create([
-                'product_id'=>$recipe->product_id,
-                'user_id'=>$param['idU']
-            ]);
+            $shopID = Shopping::where('product_id', $recipe->product_id)->first();
+            $productID = Product::find($recipe->product_id);
+            if (!isset($shopID)) {
+                if ($productID->quantity - $recipe->quantity_required < $productID->alert) {
+                    Shopping::create([
+                        'product_id'=>$recipe->product_id,
+                        'user_id'=>$param['idU'],
+                        'quantity_wanted'=>$recipe->quantity_required + $productID->alert
+                    ]);
+                }
+            } else {
+                $shopID->quantity_wanted += $recipe->quantity_required;
+                $shopID->update();
+            }
         }
 
         return redirect()->route('listRecipe')->with('success', __('Product has been add too shopping !'));
