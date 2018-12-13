@@ -31,11 +31,13 @@
                     </form>
                     </div>
                     <div class="row float-right">
-                    <form action="{{ route('deleteShopping') }}" method="POST">
-                        @csrf
-                        <input type='hidden' value='{{$product->id}}' name='product_id'>
-                        <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
-                    </form>
+                    @if($product->regular != 1)
+                        <form action="{{ route('deleteShopping') }}" method="POST">
+                            @csrf
+                            <input type='hidden' value='{{$product->id}}' name='product_id'>
+                            <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
+                        </form>
+                    @endif
                     </div>
                 </tr>
             @endforeach

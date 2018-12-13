@@ -53,12 +53,14 @@
                             </form>
                                 </div>
                                     <div class="row float-right">
-                            <form action="{{ route('addShopping') }}" method="POST">
-                                @csrf
-                                <input type='hidden' value='{{$product->id}}' name='product_id'>
-                                <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
-                                <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
-                            </form>
+                            @if(\CommiCasa\Http\Controllers\ProductController::checkIfProductIsInShopping($product->id) == false)
+                                <form action="{{ route('addShopping') }}" method="POST">
+                                    @csrf
+                                    <input type='hidden' value='{{$product->id}}' name='product_id'>
+                                    <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
+                                    <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
+                                </form>
+                            @endif
                             <form action="{{ route('deleteProductOnList') }}" method="POST">
                                 @csrf
                                 <input type='hidden' value='{{$product->id}}' name='product_id'>
