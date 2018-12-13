@@ -43,7 +43,7 @@ class RecipeController extends Controller
         $path = 'recipes/images/' . Auth::user()->id;
         $file = $request->file('image');
         if ($request->hasFile('image')) {
-            $fileName = $request->file('image')->getClientOriginalName();
+            $fileName = $request['name'] . '-' . $request->file('image')->getClientOriginalName();
             $file->move($path, $fileName);
         } else {
             $fileName = "default.png";
@@ -81,7 +81,7 @@ class RecipeController extends Controller
             $path = 'recipes/images/' . Auth::user()->id;
             $file = $request->file('image');
             if ($request->hasFile('image')) {
-                $fileName = $request->file('image')->getClientOriginalName();
+                $fileName = $id . '-' .$request->file('image')->getClientOriginalName();
                 $file->move($path, $fileName);
                 $recipeList->image = $fileName;
                 if ($image != "default.png") {
