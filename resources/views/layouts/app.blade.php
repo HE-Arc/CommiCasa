@@ -27,10 +27,10 @@
 
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel " >
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel ">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="images/logo.jpg" alt="" height="50">
+                        <img src='{{URL::to("images/logo.jpg")}}' alt="" height="45">
                         CommiCasa
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -52,7 +52,7 @@
                                 <a class="nav-link" href="{{ url('/shopping') }}">Shopping List <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('listRecipe') }}">Recipe <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ route('listRecipe') }}">Recipe List<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('listCategory') }}">Categories <span class="sr-only">(current)</span></a>
@@ -96,15 +96,30 @@
             </nav>
 
             <main class="py-1">
+                <div class="container">
+                    @if (session('success add'))
+                        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong> {{ session('success add') }} </strong>
+                        </div>
+                    @elseif(session('success delete'))
+                    <div class="alert alert-danger alert-dismissable custom-success-box" style="margin: 15px;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong> {{ session('success delete') }} </strong>
+                    </div>
+                    @endif
+                </div>
+
                 @yield('content')
             </main>
             <br>
         </div>
 
-        <hr class="container marketing" >
-        <footer class="container marketing" bottom="0" >
+        <hr class="container marketing">
+        <footer class="container marketing" bottom="0">
             <p class="float-right"><a href="#">Back to the top</a></p>
-            <p>@ 2018 He-Arc, Luca-Julien-Jeremy</p>
+            <p>
+                @ 2018 He-Arc, Luca-Julien-Jeremy</p>
         </footer>
 
     </body>

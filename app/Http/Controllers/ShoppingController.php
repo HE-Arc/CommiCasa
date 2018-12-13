@@ -38,7 +38,7 @@ class ShoppingController extends Controller
 
         Shopping::create($param);
 
-        return redirect()->route('listProduct')->with('success', __('Product has been add too shopping !'));
+        return redirect()->route('listProduct')->with('success add', 'Product added to the shopping list');
     }
 
     public function addRecipeShopping(Request $request)
@@ -64,13 +64,13 @@ class ShoppingController extends Controller
             }
         }
 
-        return redirect()->route('listRecipe')->with('success', __('Product has been add too shopping !'));
+        return redirect()->route('listRecipe')->with('success add', 'Recipe list added to the shopping list');
     }
 
     public function deleteShopping(Request $request)
     {
         $shopping = Shopping::where('product_id', $request['product_id'])->first();
         $shopping->delete();
-        return redirect()->route('listShopping')->with('success', __('Product has been remove to shopping list !'));
+        return redirect()->route('listShopping')->with('success deleted', 'Product added to the shopping list');
     }
 }

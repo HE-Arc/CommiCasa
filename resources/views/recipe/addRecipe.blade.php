@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1> {{isset($recipeList) ? 'Edit' : 'Add'}} Recipe</h1>
-    <form method="post" action="{{isset($recipeList) ? route('editRecipe' ,['id' => $recipeList->id]) : route('validateRecipe')}}">
+    <form method="post" action="{{isset($recipeList) ? route('editRecipe' ,['id' => $recipeList->id]) : route('validateRecipe')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Name</label>
@@ -36,7 +36,7 @@
                             <input name="quantMod[]" class="form-control" type="number" min="1" value="{{$recipe->quantity_required}}">
                         </td>
                         <td>
-                            <button class="btn btn-danger" type="button" onclick="location.href='{{route('deleteRecipe', ['id' => $recipe->id])}}'">Delete</button>
+                            <button class="btn btn-danger" type="button" onclick="location.href='{{route('deleteRecipe', ['idRecipeList' => $recipeList->id, 'idRecipe' => $recipe->id])}}'">Delete</button>
                         </td>
                     </tr>
                     @endforeach
@@ -69,6 +69,13 @@
 </div>
 
 <div class="form-group">
+    @if(isset($recipeList))
+    <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $recipeList->image)}}" alt="" height="200" width="200">
+    @elseif (isset($recipeList) && $recipeList->image == "default.png")
+    <img src=" {{ URL::to('recipes/images/default.png')}}" alt="" height="200" width="200">
+    @else
+    @endif
+    <br>
     <label for="image">Image</label>
     <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg">
 </div>
@@ -103,7 +110,6 @@
             $(addRemove).after(removeButton);
             $("#field" + next).attr('data-source', $(addto).attr('data-source'));
             $("#count").val(next);
-
             $('.remove-me').click(function(e) {
                 e.preventDefault();
                 var fieldNum = this.id.charAt(this.id.length - 1);

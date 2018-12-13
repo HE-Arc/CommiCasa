@@ -1,11 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @if (session('update'))
-        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong> {{ session('update') }} </strong>
-        </div>
-    @endif
+
 <div class="container">
     <h1> Product List</h1>
         <button class="btn btn-info" onclick="location.href='{{route('addProduct')}}'">Add Product</button>
@@ -65,10 +60,9 @@
                                     ><i class="fas fa-shopping-cart"></i></button>
                                 </form>
 
-                            <form action="{{ route('deleteProductOnList') }}" method="POST">
+                            <form action="{{route('deleteProduct', ['id' => $product->id])}}" method="POST">
                                 @csrf
-                                <input type='hidden' value='{{$product->id}}' name='product_id'>
-                                <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
+                                <button  class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
                             </form>
                             </div>
                             </td>

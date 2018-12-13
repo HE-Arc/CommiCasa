@@ -14,7 +14,7 @@
 
             <div class="form-group">
                 <label for="category_id">Categories</label>
-                <select class="form-control" id="category_id" name="category_id" selected="">
+                <select class="form-control" id="category_id" name="category_id" selected="" required>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}"
                             @if(isset($product))
@@ -40,9 +40,9 @@
             </div>
 
             @if(isset($product))
-                <img src={{URL::to("products/images/". Auth::user()->id."/".$product->image)}} alt="" height="200" width="200">
+                <img src="{{URL::to("products/images/". Auth::user()->id . "/" . $product->image)}}" alt="" height="200" width="200">
             @elseif (isset($product) && $product->image == "default.png")
-                <img src=" {{ URL::to('/products/images/default.png')}}" alt="" height="200" width="200">
+                <img src="{{ URL::to('products/images/default.png')}}" alt="" height="200" width="200">
             @else
             @endif
             <div class="form-group">
@@ -73,9 +73,6 @@
                 <button type="submit" class="btn btn-info"> {{isset($product) ? 'Edit Product' : 'Add Product'}}</button>
             </div>
         </form>
-        <div style="{{isset($product) ? '' : 'display: none;'}}" >
-            <button  class="btn btn-danger" onclick="location.href='{{isset($product) ? route('deleteProduct', ['id' => $product->id]) : ''}}'">Delete this product</button>
-        </div>
     </div>
 
 

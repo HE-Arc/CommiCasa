@@ -42,7 +42,7 @@ class ProductController extends Controller
         $file = $request->file('image');
 
         if($request->hasFile('image')){
-            $fileName = $request->file('image')->getClientOriginalName();
+            $fileName = $request['name'] . '-' .$request->file('image')->getClientOriginalName();
             $file->move($path, $fileName);
         } else {
             $fileName = "default.png";
@@ -63,7 +63,7 @@ class ProductController extends Controller
         $product->save();
         $this->checkRegular($product->id);
 
-        return redirect()->route('listProduct')->with('update', 'Content has been updated successfully!');
+            return redirect()->route('listProduct')->with('success add', $product->name. ' has been add');
     }
 
     public function updateProduct(Request $request)
@@ -75,7 +75,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            return $this->backWithMessage('success', 'Product has been add !');
+            return $this->backWithMessage('success add', $product->name . ' has been increase of 1');
         }
         else
         {
@@ -84,7 +84,7 @@ class ProductController extends Controller
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
             }
-            return $this->backWithMessage('success', 'Product has been remove !');
+                return $this->backWithMessage('success delete', $product->name . ' has been remove of 1');
         }
     }
 
@@ -107,7 +107,7 @@ class ProductController extends Controller
             $file = $request->file('image');
 
             if($request->hasFile('image')){
-                $fileName = $request->file('image')->getClientOriginalName();
+                $fileName = $id. '-' .$request->file('image')->getClientOriginalName();
                 $file->move($path, $fileName);
                 $product->image = $fileName;
 
@@ -126,7 +126,7 @@ class ProductController extends Controller
 
             $product->save();
 
-            return redirect()->route('listProduct')->with('success', 'Product has been updated');
+            return redirect()->route('listProduct')->with('success add', $product->name.' has been updated');
         }
 
         return view('product/addProduct', compact('product', 'categories'));
@@ -142,14 +142,7 @@ class ProductController extends Controller
             File::delete("products/images/". Auth::user()->id . "/" . $image);
         }
         $product->delete();
-        return redirect()->route('listProduct')->with('success', 'Product was deleted');
-    }
-
-    public function deleteProductOnList(Request $request)
-    {
-        $product = Product::find($request['product_id']);
-        $product->delete();
-        return redirect()->route('listProduct')->with('success', 'Product was deleted');
+        return redirect()->route('listProduct')->with('success delete', $product->name. ' has been deleted');
     }
 
     public static function checkRegular($id)
