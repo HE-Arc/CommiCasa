@@ -9,15 +9,21 @@
     @if(count($categories) > 0)
     <table class="table table-hover">
         <tr>
-            <td><strong>
-                    @lang('#')</strong>
-            </td>
-            <td><strong>
-                    @lang('Name')</strong>
-            </td>
-            <td><strong>
-                    @lang('Delete')</strong>
-            </td>
+            <th>
+                <strong>
+                    @lang('#')
+                </strong>
+            </th>
+            <th>
+                <strong>
+                    @lang('Name')
+                </strong>
+            </th>
+            <th>
+                <strong>
+                    @lang('Delete')
+                </strong>
+            </th>
         </tr>
         @foreach($categories as $category)
         <tr onclick="location.href='{{route('updateCategory', ['id' => $category->id])}}'">

@@ -34,9 +34,9 @@
                     <div class="row">
                         <div>
                             @if($listRecipe->image != "default.png")
-                                <img src="products/images/{{Auth::user()->id}}/{{$listRecipe->image}}" alt="" height="75" width="75">
+                                <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="75" width="75">
                                 @else
-                                <img src="products/images/default.png" alt="" height="75" width="75">
+                                <img src="{{ URL::to('recipes/images/default.png')}}" alt="" height="75" width="75">
                                 @endif
                         </div>
                         <div>

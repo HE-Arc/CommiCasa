@@ -61,10 +61,9 @@
                                     <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
                                 </form>
                             @endif
-                            <form action="{{ route('deleteProductOnList') }}" method="POST">
+                            <form action="{{route('deleteProduct', ['id' => $product->id])}}" method="POST">
                                 @csrf
-                                <input type='hidden' value='{{$product->id}}' name='product_id'>
-                                <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
+                                <button  class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>
                             </form>
                             </div>
                             </td>

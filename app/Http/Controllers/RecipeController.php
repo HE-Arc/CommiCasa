@@ -1,5 +1,4 @@
 <?php
-
 namespace CommiCasa\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,18 +14,16 @@ class RecipeController extends Controller
     {
         $this->middleware('auth');
     }
-
     public function listRecipe()
     {
         $listRecipes = ListRecipe::where('user_id', Auth::user()->id)->get();
         $products = Recipe::from('recipes as r')
-        ->join('products as p', 'p.id', '=', 'r.product_id')
-        ->select('p.*', 'r.*')
-        ->where('p.user_id', Auth::user()->id)
-        ->get();
+            ->join('products as p', 'p.id', '=', 'r.product_id')
+            ->select('p.*', 'r.*')
+            ->where('p.user_id', Auth::user()->id)
+            ->get();
         return view('recipe/listRecipe', compact('listRecipes', 'products'));
     }
-
     public function addRecipe()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
@@ -36,36 +33,29 @@ class RecipeController extends Controller
         }
         return view('recipe/addRecipe', compact('products'));
     }
-
     public function showRecipe()
     {
         return view('recipe/showRecipe');
     }
-
     public function validRecipe(Request $request)
     {
         $tempRequest = $request;
 
         $path = 'recipes/images/' . Auth::user()->id;
         $file = $request->file('image');
-
         if ($request->hasFile('image')) {
-            $fileName = $request->file('image')->getClientOriginalName();
+            $fileName = $request['name'] . '-' . $request->file('image')->getClientOriginalName();
             $file->move($path, $fileName);
         } else {
             $fileName = "default.png";
         }
         $recipeID = new ListRecipe();
-
         $recipeID->name = $request['name'];
         $recipeID->user_id = Auth::user()->id;
         $recipeID->description =$request['description'];
         $recipeID->image = $fileName;
-
         $recipeID->save();
-
         $paramRecipe = $tempRequest->except('_token', 'count', 'name', 'description', 'image');
-
         for ($i=0;$i<count($paramRecipe['prod']);$i++) {
             Recipe::create([
                 'user_id' => $paramRecipe['user_id'],
@@ -74,15 +64,12 @@ class RecipeController extends Controller
                 'quantity_required' => $paramRecipe['quant'][$i]
             ]);
         }
-
         return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
     }
-
     public function editRecipe(Request $request, $id)
     {
         $tempRequest = $request;
         $products = Product::where('user_id', Auth::user()->id)->get();
-
         $recipeList = ListRecipe::find($id);
         $recipes = Recipe::from('recipes as r')
             ->join('products as p', 'p.id', '=', 'r.product_id')
@@ -95,25 +82,19 @@ class RecipeController extends Controller
             $path = 'recipes/images/' . Auth::user()->id;
             $file = $request->file('image');
             if ($request->hasFile('image')) {
-                $fileName = $request->file('image')->getClientOriginalName();
+                $fileName = $id . '-' .$request->file('image')->getClientOriginalName();
                 $file->move($path, $fileName);
                 $recipeList->image = $fileName;
-
                 if ($image != "default.png") {
                     File::delete("recipes/images/". Auth::user()->id . "/" . $image);
                 }
             }
-
             $recipeList->name = $request['name'];
             $recipeList->user_id = Auth::user()->id;
             $recipeList->description = $request['description'];
-
             $recipeList->save();
-
             $paramRecipe = $tempRequest->except('_token', 'count', 'name', 'description', 'image');
-
             $recipeArray = Recipe::where('name_recipe_id', $id)->get();
-
             for ($i=0;$i<count($paramRecipe['prodID']);$i++) {
                 foreach ($recipeArray as $rec) {
                     if ($rec['id']==$paramRecipe['prodID'][$i]) {
@@ -135,30 +116,25 @@ class RecipeController extends Controller
 
             return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
         }
+
         return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'));
     }
-
     public function deleteRecipeList($id)
     {
         $recipeList = ListRecipe::find($id);
-
         $image = $recipeList->image;
-
         if ($image != "default.png") {
             File::delete("recipes/images/". Auth::user()->id . "/" . $image);
         }
         $recipeList->delete();
         return redirect()->route('listRecipe')->with('success', 'RecipeList was deleted');
     }
-
-    public function deleteRecipe(Request $request)
+    public function deleteRecipe($idRecipeList, $idRecipe)
     {
-        $recipe = Recipe::find($request['recipe_id']);
-        $newId = $recipe->name_recipe_id;
+        $recipe = Recipe::find($idRecipe);
         $recipe->delete();
-        return redirect()->route('editRecipe', ['id'=>$newId]);
+        return redirect()->route('editRecipe', $idRecipeList);
     }
-
     public function backWithMessage($type, $message)
     {
         return back()->with($type, $message);
