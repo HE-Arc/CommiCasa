@@ -31,34 +31,47 @@
             </div>
             <div id="collapse{{$listRecipe->id}}" class="collapse" aria-labelledby="heading{{$listRecipe->id}}" data-parent="#accordion">
                 <div class="card-body">
-                    <div class="row">
-                        <div>
-                            @if($listRecipe->image != "default.png")
-                                <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="75" width="75">
-                                @else
-                                <img src="{{ URL::to('recipes/images/default.png')}}" alt="" height="75" width="75">
-                                @endif
-                        </div>
-                        <div>
-                            <table>
-                                <tr>
-                                    <td>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @if($listRecipe->image != "default.png")
+                                    <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="75" width="75">
+                                    @else
+                                    <img src="{{ URL::to('recipes/images/default.png')}}" alt="" height="150" width="150">
+                                    @endif
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Ingredients</th>
+                                                <th>Quantity Required</th>
+                                            </tr>
+                                            @foreach ($products as $product)
+                                            @if ($product->name_recipe_id==$listRecipe->id)
+                                            <tr>
+                                                <td>
+                                                    {{$product->name}}
+                                                </td>
+                                                <td>
+                                                    {{$product->quantity_required}}
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            @endforeach
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5><strong>Description</strong></h5>
                                         <p>{{$listRecipe->description}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <table>
-                                        @foreach ($products as $product)
-                                        @if ($product->name_recipe_id==$listRecipe->id)
-                                        <tr>
-                                            <td>{{$product->name}}</td>
-                                            <td>{{$product->quantity_required}}</td>
-                                        </tr>
-                                        @endif
-                                        @endforeach
-                                    </table>
-                                </tr>
-                            </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
