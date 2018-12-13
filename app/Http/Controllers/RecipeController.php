@@ -151,9 +151,9 @@ class RecipeController extends Controller
         return redirect()->route('listRecipe')->with('success', 'RecipeList was deleted');
     }
 
-    public function deleteRecipe(Request $request)
+    public function deleteRecipe($id)
     {
-        $recipe = Recipe::find($request['recipe_id']);
+        $recipe = Recipe::find($id);
         $newId = $recipe->name_recipe_id;
         $recipe->delete();
         return redirect()->route('editRecipe', ['id'=>$newId]);

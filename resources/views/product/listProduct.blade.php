@@ -27,9 +27,9 @@
                         {{\CommiCasa\Http\Controllers\ProductController::checkRegular($product->id)}}
                         <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @if($product->quantity == 0)
-                                <tr bgcolor="#FC5D5D" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
-                            @elseif($product->alert >= $product->quantity)
-                                <tr bgcolor="#F0E68C" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                                <tr class="bg-danger" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                            @elseif($product->alert > $product->quantity)
+                                <tr class="bg-warning" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @else
                                 <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @endif
@@ -53,14 +53,18 @@
                             </form>
                                 </div>
                                     <div class="row float-right">
-                            @if(\CommiCasa\Http\Controllers\ProductController::checkIfProductIsInShopping($product->id) == false)
+
                                 <form action="{{ route('addShopping') }}" method="POST">
                                     @csrf
                                     <input type='hidden' value='{{$product->id}}' name='product_id'>
                                     <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
-                                    <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
+                                    <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"
+                                    @if(\CommiCasa\Http\Controllers\ProductController::checkIfProductIsInShopping($product->id) == true)
+                                        disabled
+                                    @endif
+                                    ><i class="fas fa-shopping-cart"></i></button>
                                 </form>
-                            @endif
+
                             <form action="{{ route('deleteProductOnList') }}" method="POST">
                                 @csrf
                                 <input type='hidden' value='{{$product->id}}' name='product_id'>

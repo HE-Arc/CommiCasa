@@ -132,7 +132,7 @@ Route::get('/recipe/delete/{id}', [
     'uses' => 'RecipeController@deleteRecipeList'
 ]);
 
-Route::post('/delete/recipe/', [
+Route::get('/delete/recipe/{id}', [
     'as' => 'deleteRecipe',
     'uses' => 'RecipeController@deleteRecipe'
 ]);

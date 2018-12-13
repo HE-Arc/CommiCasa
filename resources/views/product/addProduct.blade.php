@@ -35,8 +35,8 @@
 
             <div class="form-group">
                 <label for="alert">Minimum alert</label>
-                <input type="number" name="alert" id="alert" class="form-control" min="0"
-                       value="{{isset($product) ? $product->alert: '0'}}">
+                <input type="number" name="alert" id="alert" class="form-control" min="1"
+                       value="{{isset($product) ? $product->alert: '1'}}">
             </div>
 
             @if(isset($product))
