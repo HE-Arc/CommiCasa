@@ -117,14 +117,17 @@ class RecipeController extends Controller
                     }
                 }
             }
-            for ($i=0;$i<count($paramRecipe['prod']);$i++) {
-                Recipe::create([
-                    'user_id' => $paramRecipe['user_id'],
-                    'product_id' => $paramRecipe['prod'][$i],
-                    'name_recipe_id' => $recipeList->id,
-                    'quantity_required' => $paramRecipe['quant'][$i]
-                ]);
+            if ($paramRecipe['addProdOK']==1) {
+                for ($i=0;$i<count($paramRecipe['prod']);$i++) {
+                    Recipe::create([
+                        'user_id' => $paramRecipe['user_id'],
+                        'product_id' => $paramRecipe['prod'][$i],
+                        'name_recipe_id' => $recipeList->id,
+                        'quantity_required' => $paramRecipe['quant'][$i]
+                    ]);
+                }
             }
+
             return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
         }
         return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'));
@@ -145,8 +148,6 @@ class RecipeController extends Controller
 
     public function deleteRecipe(Request $request)
     {
-        var_dump($request);
-        die;
         $recipe = Recipe::find($request['recipe_id']);
         $newId = $recipe->name_recipe_id;
         $recipe->delete();

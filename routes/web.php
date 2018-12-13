@@ -65,6 +65,11 @@ Route::post('/shopping', [
     'uses' => 'ShoppingController@addShopping'
 ]);
 
+Route::post('/shopping/recipe', [
+    'as' => 'addRecipeShopping',
+    'uses' => 'ShoppingController@addRecipeShopping'
+]);
+
 Route::post('/deleteShopping', [
     'as' => 'deleteShopping',
     'uses' => 'ShoppingController@deleteShopping'

@@ -35,7 +35,7 @@
                         <td>
                             <form method="post" action="{{route('deleteRecipe')}}">
                                 @csrf
-                                <input type='hidden' value='{{$recipe->id}}' name='recipe_id'>
+                                <input type='hidden' value="{{$recipe->id}}" name='recipe_id'>
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
                         </td>
@@ -62,7 +62,8 @@
                 </div>
         </div>
         @if (isset($recipeList))
-        <a id="more" href="#" onclick="$('.details').slideToggle(function(){$('#more').html($('.details').is(':visible')?'Don\'t Add More Ingredients':'Add More Ingredients');});">Add More Ingredients</a>
+        <input type="hidden" id="addProdOK" name="addProdOK" value="0">
+        <a id="more" href="#">Add More Ingredients</a>
         @endif
         <input type="hidden" name="count" value="1" />
 </div>
@@ -110,6 +111,15 @@
                 $(this).remove();
                 $(fieldID).remove();
             });
+        });
+        $("#more").click(function(e) {
+            $('.details').slideToggle(function() {
+                $('#more').html($('.details').is(':visible') ? 'Don\'t Add More Ingredients' : 'Add More Ingredients');
+            });
+            if ("1" == $("#addProdOK").val())
+                $("#addProdOK").val("0");
+            else
+                $("#addProdOK").val("1");
         });
     });
 </script>

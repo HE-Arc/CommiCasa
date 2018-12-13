@@ -3,6 +3,7 @@
 namespace CommiCasa\Http\Controllers;
 
 use Illuminate\Http\Request;
+use CommiCasa\Recipe;
 use CommiCasa\Product;
 use CommiCasa\Shopping;
 use Auth;
@@ -38,6 +39,22 @@ class ShoppingController extends Controller
         Shopping::create($param);
 
         return redirect()->route('listProduct')->with('success', __('Product has been add too shopping !'));
+    }
+
+    public function addRecipeShopping(Request $request)
+    {
+        $param = $request->except('_token');
+
+        $recipes = Recipe::where('name_recipe_id', $param['idR'])->get();
+
+        foreach ($recipes as $recipe) {
+            Shopping::create([
+                'product_id'=>$recipe->product_id,
+                'user_id'=>$param['idU']
+            ]);
+        }
+
+        return redirect()->route('listRecipe')->with('success', __('Product has been add too shopping !'));
     }
 
     public function deleteShopping(Request $request)
