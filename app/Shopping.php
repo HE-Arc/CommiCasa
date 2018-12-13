@@ -8,6 +8,7 @@ class Shopping extends Model
 {
     protected $fillable = [
         'product_id',
-        'user_id'
+        'user_id',
+        'quantity_wanted'
     ];
 }

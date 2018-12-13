@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" placeholder="Enter a name" class="form-control" required value="{{isset($recipeList) ? $recipeList->name: ''}}">
-            </div>
+        </div>
 
             <div class="form-group">
                 @if (isset($recipeList))

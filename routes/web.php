@@ -43,6 +43,7 @@ Route::post('/delete', [
     'as' => 'deleteProductOnList',
     'uses' => 'ProductController@deleteProductOnList'
 ]);
+
 //Shopping List
 Route::get('/shopping', [
     'as' => 'listShopping',
@@ -52,10 +53,12 @@ Route::post('/shopping', [
     'as' => 'addShopping',
     'uses' => 'ShoppingController@addShopping'
 ]);
+
 Route::post('/shopping/recipe', [
     'as' => 'addRecipeShopping',
     'uses' => 'ShoppingController@addRecipeShopping'
 ]);
+
 Route::post('/deleteShopping', [
     'as' => 'deleteShopping',
     'uses' => 'ShoppingController@deleteShopping'

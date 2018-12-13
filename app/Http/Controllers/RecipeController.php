@@ -75,6 +75,7 @@ class RecipeController extends Controller
             ->select('r.*', 'p.name')
             ->where('name_recipe_id', $id)
             ->get();
+
         $image = $recipeList['image'];
         if ($request->isMethod('post')) {
             $path = 'recipes/images/' . Auth::user()->id;
@@ -111,6 +112,7 @@ class RecipeController extends Controller
                     ]);
                 }
             }
+
             return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
         }
 

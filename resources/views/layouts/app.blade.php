@@ -27,7 +27,7 @@
 
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel " >
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel ">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src='{{URL::to("images/logo.jpg")}}' alt="" height="45">
@@ -52,7 +52,7 @@
                                 <a class="nav-link" href="{{ url('/shopping') }}">Shopping List <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('listRecipe') }}">Recipe <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ route('listRecipe') }}">Recipe List<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('listCategory') }}">Categories <span class="sr-only">(current)</span></a>
@@ -101,10 +101,11 @@
             <br>
         </div>
 
-        <hr class="container marketing" >
-        <footer class="container marketing" bottom="0" >
+        <hr class="container marketing">
+        <footer class="container marketing" bottom="0">
             <p class="float-right"><a href="#">Back to the top</a></p>
-            <p>@ 2018 He-Arc, Luca-Julien-Jeremy</p>
+            <p>
+                @ 2018 He-Arc, Luca-Julien-Jeremy</p>
         </footer>
 
     </body>

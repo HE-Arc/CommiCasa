@@ -12,6 +12,12 @@
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$listRecipe->id}}" aria-expanded="false" aria-controls="collapse{{$listRecipe->id}}">
                         {{$listRecipe->name}}
                     </button>
+                    <form action="{{ route('addRecipeShopping') }}" method="POST">
+                        @csrf
+                        <input type='hidden' value='{{$listRecipe->id}}' name='idR'>
+                        <input type='hidden' value={{ Auth::user()->id }} name='idU'>
+                        <button class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
+                    </form>
                     <button class="btn " onclick="location.href='{{route('editRecipe', ['id' => $listRecipe->id])}}'">Edit</button>
                     <button class="btn btn-danger" onclick="location.href='{{route('deleteRecipeList', ['id' => $listRecipe->id])}}'">Delete</button>
                 </h5>
