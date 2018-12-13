@@ -31,7 +31,7 @@ class RecipeController extends Controller
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
 
-        if ($products->count()==0) {
+        if (!isset($products)) {
             return view('recipe/listRecipe')->with('error', __('Create some products first!'));
         }
         return view('recipe/addRecipe', compact('products'));
