@@ -15,33 +15,33 @@
             @if(isset($recipeList))
             <div class="control-group">
                 @if(count($recipes)> 0)
-                <label class="control-label" for="tabProd">Old ingredient</label>
-                <table class="table table-hover" id="tabProd">
-                    <tr>
-                        <th>
-                            @lang('Product')</th>
-                        <th>
-                            @lang('Quantity Required')</th>
-                        <th>
-                            @lang('Delete From Recipe')</th>
-                    </tr>
-                    @foreach ($recipes as $recipe)
+                    <label class="control-label" for="tabProd">Old ingredient</label>
+                    <table class="table table-hover" id="tabProd">
+                        <tr>
+                            <th>
+                                @lang('Product')</th>
+                            <th>
+                                @lang('Quantity Required')</th>
+                            <th>
+                                @lang('Delete From Recipe')</th>
+                        </tr>
+                        @foreach ($recipes as $recipe)
 
-                    <tr>
-                        <input type="hidden" name="prodID[]" value="{{$recipe->id}}">
-                        <td>
-                            {{$recipe->name}}
-                        </td>
-                        <td>
-                            <input name="quantMod[]" class="form-control" type="number" min="1" value="{{$recipe->quantity_required}}">
-                        </td>
-                        <td>
-                            <button class="btn btn-danger" type="button" onclick="location.href='{{route('deleteRecipe', ['idRecipeList' => $recipeList->id, 'idRecipe' => $recipe->id])}}'">Delete</button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </table>
-                @endif
+                        <tr>
+                            <input type="hidden" name="prodID[]" value="{{$recipe->id}}">
+                            <td>
+                                {{$recipe->name}}
+                            </td>
+                            <td>
+                                <input name="quantMod[]" class="form-control" type="number" min="1" value="{{$recipe->quantity_required}}">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" type="button" onclick="location.href='{{route('deleteRecipe', ['idRecipeList' => $recipeList->id, 'idRecipe' => $recipe->id])}}'">Delete</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    @endif
             </div>
             @endif
 
@@ -51,16 +51,16 @@
                     <div id="field1" style="width: 95%;">
                         <select class="custom-select" style="width: 49.5%;" name="prod[]" required>
                             @foreach($products as $product)
-                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
                         </select>
-                            <input id="numfield1" name="quant[]" style="width: 49.5%;" class="form-control" type="number" min="1" value="1">
+                        <input id="numfield1" name="quant[]" style="width: 49.5%;" class="form-control" type="number" min="1" value="1">
 
                     </div>
                     <button id="b1" class="btn add-more btn-primary" type="button">+</button>
                 </div>
-            </div>
-                <br>
+        </div>
+        <br>
         @if (isset($recipeList))
         <input type="hidden" id="addProdOK" name="addProdOK" value="0">
         <button type=button class="btn btn-primary" id="more">Add More Ingredients</button>
@@ -97,6 +97,10 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        /*The following code allows the user to dynamically choose the number of ingredients he wants in his recipe.
+        It is necessary to listen to the onclick call of the add-more button thus creating a new select field and delete button.
+        The button will be linked to the last field created to gie it a delete option. The newly created field will be added at the end
+        of the field container, just befor add-more button.*/
         var next = 1;
         var options = '@foreach ($products as $product) <option value="{{$product->id}}">{{$product->name}}</option>@endforeach';
         $(".add-more").click(function(e) {
@@ -104,7 +108,8 @@
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<div id="field' + next + '" style="width: 95%;"><select style="width: 49.5%;" class="custom-select" name="prod[]">' + options + '</select><input style="width: 49.5%;" name="quant[]" class="form-control" type="number" min="1" value="1"></div>';
+            var newIn = '<div id="field' + next + '" style="width: 95%;"><select style="width: 49.5%;" class="custom-select" name="prod[]">' + options +
+                '</select><input style="width: 49.5%;" name="quant[]" class="form-control" type="number" min="1" value="1"></div>';
             var newInput = $(newIn);
             var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button>';
             var removeButton = $(removeBtn);
@@ -120,6 +125,8 @@
                 $(fieldID).remove();
             });
         });
+        /*This onclick method allows to show or hide the new ingredients selection when editing a recipe.
+        The value will let the controller know if it has to care for new ingredients or not.*/
         $("#more").click(function(e) {
             $('.details').slideToggle(function() {
                 $('#more').html($('.details').is(':visible') ? 'Don\'t Add More Ingredients' : 'Add More Ingredients');
