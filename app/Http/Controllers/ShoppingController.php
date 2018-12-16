@@ -10,19 +10,22 @@ use Auth;
 
 class ShoppingController extends Controller
 {
+    /**
+     * Create a new ShoppingController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Display the list of product in shopping list
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listShopping()
     {
-        /*
-        SELECT `shoppings`.`product_id`, `products`.`id`, `products`.`name`, `products`.`quantity`
-        FROM `products`, `shoppings`
-        WHERE (`shoppings`.`product_id` = `products`.`id`)
-        AND (`shoppings`.`user_id` = '1')
-         */
         $products =Shopping::from('shoppings as s')
                 ->join('products as p', 'p.id', '=', 's.product_id')
                 ->select('p.*', 's.quantity_wanted')
@@ -32,15 +35,25 @@ class ShoppingController extends Controller
         return view('shopping/listShopping', compact('products'));
     }
 
+    /**
+     * Add a product in shopping list and redirect to the view listProduct
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addShopping(Request $request)
     {
         $param = $request->except('_token');
 
         Shopping::create($param);
 
-        return redirect()->route('listProduct')->with('success', __('Product has been add too shopping !'));
+        return redirect()->route('listProduct')->with('success add', 'The product has been added to the shopping list');
     }
 
+    /**
+     * Add a recipe to the shopping list.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addRecipeShopping(Request $request)
     {
         $param = $request->except('_token');
@@ -62,13 +75,18 @@ class ShoppingController extends Controller
             }
         }
 
-        return redirect()->route('listRecipe')->with('success', __('Product has been add too shopping !'));
+        return redirect()->route('listRecipe')->with('success add', 'The recipe ingredients has been added to the shopping list');
     }
 
+    /**
+     * Delete a product from the shopping list
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteShopping(Request $request)
     {
         $shopping = Shopping::where('product_id', $request['product_id'])->first();
         $shopping->delete();
-        return redirect()->route('listShopping')->with('success', __('Product has been remove to shopping list !'));
+        return redirect()->route('listShopping')->with('success delete', 'The product has been removed from the shopping list');
     }
 }

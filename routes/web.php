@@ -10,10 +10,13 @@
 |
 */
 Auth::routes();
+
+// Home route
 Route::get('/', [
     'as' => 'index',
     'uses' => 'HomeController@index'
-])->name('home');
+]);
+
 //Product Route
 Route::get('/product', [
     'as' => 'listProduct',
@@ -105,7 +108,8 @@ Route::get('/recipe/delete/{id}', [
     'as' => 'deleteRecipeList',
     'uses' => 'RecipeController@deleteRecipeList'
 ]);
-Route::post('/recipe/{idRecipeList}/delete/{idRecipe}', [
+
+Route::get('/recipe/{idRecipeList}/delete/{idRecipe}', [
     'as' => 'deleteRecipe',
     'uses' => 'RecipeController@deleteRecipe'
 ]);

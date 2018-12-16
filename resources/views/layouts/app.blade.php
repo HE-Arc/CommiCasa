@@ -23,6 +23,7 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+        <link rel="shortcut icon" type="image/x-icon" href="images/logo.jpg" />
     </head>
 
     <body>
@@ -96,6 +97,20 @@
             </nav>
 
             <main class="py-1">
+                <div class="container">
+                    @if (session('success add'))
+                        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong> {{ session('success add') }} </strong>
+                        </div>
+                    @elseif(session('success delete'))
+                    <div class="alert alert-danger alert-dismissable custom-success-box" style="margin: 15px;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong> {{ session('success delete') }} </strong>
+                    </div>
+                    @endif
+                </div>
+
                 @yield('content')
             </main>
             <br>
@@ -104,8 +119,7 @@
         <hr class="container marketing">
         <footer class="container marketing" bottom="0">
             <p class="float-right"><a href="#">Back to the top</a></p>
-            <p>
-                @ 2018 He-Arc, Luca-Julien-Jeremy</p>
+            <p>© 2018 He-Arc, Srdjenovic - Feuillade - Dubois</p>
         </footer>
 
     </body>

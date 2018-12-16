@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <h1> Category List</h1>
+    <h1>Your list of category</h1>
 
-    <button class="btn btn-info" onclick="window.location.href='{{route('addCategory')}}'">Add category</button>
+    <button class="btn btn-lg btn-primary" onclick="window.location.href='{{route('addCategory')}}'">Add a new category</button>
     <hr>
     @if(count($categories) > 0)
     <table class="table table-hover">

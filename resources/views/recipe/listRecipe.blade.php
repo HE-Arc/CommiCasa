@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1> Recipe List</h1>
-    <button class="btn btn-info" onclick="location.href='{{route('addRecipe')}}'">Add Recipe</button>
+    <h1>Your list of recipe</h1>
+    <button class="btn btn-lg btn-primary" onclick="location.href='{{route('addRecipe')}}'">Add a new recipe</button>
     <hr>
     @if(count($listRecipes) > 0)
     <div id="accordion">
@@ -12,7 +12,7 @@
             <div class="card-header container" id="heading{{$listRecipe->id}}" style="vertical-align: middle;" data-toggle="collapse" data-target="#collapse{{$listRecipe->id}}" aria-expanded="false" aria-controls="collapse{{$listRecipe->id}}">
                 <div class="row align-items-center">
                     <div class="col align-text-left" style="text-indent: 50px;font-size: 35px;">
-                        {{$listRecipe->name}}
+                        <h2>{{$listRecipe->name}}</h2>
                     </div>
                     <div class="col align-text-right">
                         <div class="row float-right">
@@ -35,9 +35,9 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 @if($listRecipe->image != "default.png")
-                                    <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="75" width="75">
+                                    <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="200" width="200">
                                     @else
-                                    <img src="{{ URL::to('recipes/images/default.png')}}" alt="" height="150" width="150">
+                                    <img src="{{ URL::to('images/default.png')}}" alt="" height="200" width="200">
                                     @endif
                             </div>
                             <div class="col-sm-8">

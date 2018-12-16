@@ -1,14 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    @if (session('update'))
-        <div class="alert alert-success alert-dismissable custom-success-box" style="margin: 15px;">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong> {{ session('update') }} </strong>
-        </div>
-    @endif
+
 <div class="container">
-    <h1> Product List</h1>
-        <button class="btn btn-info" onclick="location.href='{{route('addProduct')}}'">Add Product</button>
+    <h1>Your list of product</h1>
+        <button class="btn btn-lg btn-primary" onclick="location.href='{{route('addProduct')}}'">Add a new product</button>
     <hr>
         @if(count($products) > 0)
         @foreach($categories as $category)
@@ -27,9 +22,9 @@
                         {{\CommiCasa\Http\Controllers\ProductController::checkRegular($product->id)}}
                         <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @if($product->quantity == 0)
-                                <tr bgcolor="#FC5D5D" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
-                            @elseif($product->alert >= $product->quantity)
-                                <tr bgcolor="#F0E68C" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                                <tr class="bg-danger" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
+                            @elseif($product->alert > $product->quantity)
+                                <tr class="bg-warning" onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @else
                                 <tr onclick="location.href='{{route('editProduct', ['id' => $product->id])}}'">
                             @endif
@@ -38,7 +33,7 @@
                                 @if($product->image != "default.png")
                                     <img src="products/images/{{Auth::user()->id}}/{{$product->image}}" alt="" height="75" width="75">
                                 @else
-                                    <img src="products/images/default.png" alt="" height="75" width="75">
+                                    <img src="images/default.png" alt="" height="75" width="75">
                                 @endif
                             </td>
                             <td class="align-middle" >{{ $product->name}}</td>
@@ -53,14 +48,18 @@
                             </form>
                                 </div>
                                     <div class="row float-right">
-                            @if(\CommiCasa\Http\Controllers\ProductController::checkIfProductIsInShopping($product->id) == false)
+
                                 <form action="{{ route('addShopping') }}" method="POST">
                                     @csrf
                                     <input type='hidden' value='{{$product->id}}' name='product_id'>
                                     <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
-                                    <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"><i class="fas fa-shopping-cart"></i></button>
+                                    <button name="addToShopping" value="1" class="btn btn-sm btn-sm btn-primary" style="width:35px; height:35px"
+                                    @if(\CommiCasa\Http\Controllers\ProductController::checkIfProductIsInShopping($product->id) == true)
+                                        disabled
+                                    @endif
+                                    ><i class="fas fa-shopping-cart"></i></button>
                                 </form>
-                            @endif
+
                             <form action="{{route('deleteProduct', ['id' => $product->id])}}" method="POST">
                                 @csrf
                                 <button  class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"><i class="fas fa-trash"></i></button>

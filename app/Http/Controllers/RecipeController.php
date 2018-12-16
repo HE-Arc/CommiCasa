@@ -10,10 +10,20 @@ use Illuminate\Support\Facades\File;
 
 class RecipeController extends Controller
 {
+    /**
+     * Create a new RecipeController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+    /**
+     * Display all the list of recipe in the view listRecipe
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listRecipe()
     {
         $listRecipes = ListRecipe::where('user_id', Auth::user()->id)->get();
@@ -24,19 +34,26 @@ class RecipeController extends Controller
             ->get();
         return view('recipe/listRecipe', compact('listRecipes', 'products'));
     }
+
+    /**
+     * Add a new recipe if one product exist. Otherwise redirect to the view addRecipe with error
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addRecipe()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
 
         if (!isset($products)) {
-            return view('recipe/listRecipe')->with('error', __('Create some products first!'));
+            return view('recipe/listRecipe')->with('success delete', 'Create some products first!');
         }
         return view('recipe/addRecipe', compact('products'));
     }
-    public function showRecipe()
-    {
-        return view('recipe/showRecipe');
-    }
+
+    /**
+     * Valide the add of a new recipe and create it.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function validRecipe(Request $request)
     {
         $tempRequest = $request;
@@ -64,8 +81,15 @@ class RecipeController extends Controller
                 'quantity_required' => $paramRecipe['quant'][$i]
             ]);
         }
-        return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
+        return redirect()->route('listRecipe')->with('success add', '"' . $recipeID->name . '"' . ' has been added');
     }
+
+    /**
+     * Redirect to the view addRecipe with id recipe parameter. If the method is post also, edit the recipe given.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function editRecipe(Request $request, $id)
     {
         $tempRequest = $request;
@@ -95,14 +119,18 @@ class RecipeController extends Controller
             $recipeList->save();
             $paramRecipe = $tempRequest->except('_token', 'count', 'name', 'description', 'image');
             $recipeArray = Recipe::where('name_recipe_id', $id)->get();
-            for ($i=0;$i<count($paramRecipe['prodID']);$i++) {
-                foreach ($recipeArray as $rec) {
-                    if ($rec['id']==$paramRecipe['prodID'][$i]) {
-                        $rec->quantity_required = $paramRecipe['quantMod'][$i];
-                        $rec->save();
+            if(isset($paramRecipe['prodID']))
+            {
+                for ($i=0;$i<count($paramRecipe['prodID']);$i++) {
+                    foreach ($recipeArray as $rec) {
+                        if ($rec['id']==$paramRecipe['prodID'][$i]) {
+                            $rec->quantity_required = $paramRecipe['quantMod'][$i];
+                            $rec->save();
+                        }
                     }
                 }
             }
+
             if ($paramRecipe['addProdOK']==1) {
                 for ($i=0;$i<count($paramRecipe['prod']);$i++) {
                     Recipe::create([
@@ -114,11 +142,17 @@ class RecipeController extends Controller
                 }
             }
 
-            return redirect()->route('listRecipe')->with('success', __('Recipe has been add !'));
+            return redirect()->route('listRecipe')->with('success add', '"'. $request['name'] . '" has been updated');
         }
 
-        return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'));
+        return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'))->with('success add', '"'. $request['name'] . '" has been updated');
     }
+
+    /**
+     * Delete a recipe with its id
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteRecipeList($id)
     {
         $recipeList = ListRecipe::find($id);
@@ -127,16 +161,19 @@ class RecipeController extends Controller
             File::delete("recipes/images/". Auth::user()->id . "/" . $image);
         }
         $recipeList->delete();
-        return redirect()->route('listRecipe')->with('success', 'RecipeList was deleted');
+        return redirect()->route('listRecipe')->with('success delete', '"'. $recipeList['name'] . '" has been removed');
     }
+
+    /**
+     * Delete a ingredient (product) in the recipe with the id of the recipe and the ingredient
+     * @param $idRecipeList
+     * @param $idRecipe
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteRecipe($idRecipeList, $idRecipe)
     {
         $recipe = Recipe::find($idRecipe);
         $recipe->delete();
-        return redirect()->route('editRecipe', $idRecipeList);
-    }
-    public function backWithMessage($type, $message)
-    {
-        return back()->with($type, $message);
+        return redirect()->route('editRecipe', $idRecipeList)->with('success delete', 'An ingredient has been removed');;
     }
 }
