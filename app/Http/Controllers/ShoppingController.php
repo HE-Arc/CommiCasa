@@ -51,13 +51,11 @@ class ShoppingController extends Controller
             $shopID = Shopping::where('product_id', $recipe->product_id)->first();
             $productID = Product::find($recipe->product_id);
             if (!isset($shopID)) {
-                if ($productID->quantity - $recipe->quantity_required < $productID->alert) {
-                    Shopping::create([
+                Shopping::create([
                         'product_id'=>$recipe->product_id,
                         'user_id'=>$param['idU'],
                         'quantity_wanted'=>$recipe->quantity_required + $productID->alert
                     ]);
-                }
             } else {
                 $shopID->quantity_wanted += $recipe->quantity_required;
                 $shopID->update();
