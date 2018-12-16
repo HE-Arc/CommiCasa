@@ -75,7 +75,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            return $this->backWithMessage('success add', 'Quantity of ' . $product->name . ' has been increased of 1');
+            return $this->backWithMessage('success add', 'Quantity of "' . $product->name . '" has been increased of 1');
         }
         else
         {
@@ -84,7 +84,7 @@ class ProductController extends Controller
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
             }
-                return $this->backWithMessage('success delete', 'Quantity of ' . $product->name . ' has been decreased of 1');
+                return $this->backWithMessage('success delete', 'Quantity of "' . $product->name . '" has been decreased of 1');
         }
     }
 
