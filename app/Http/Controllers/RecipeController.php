@@ -165,7 +165,7 @@ class RecipeController extends Controller
     }
 
     /**
-     * Delete a ingredient (product) in the recipe with the the id of the recipe and the ingredient
+     * Delete a ingredient (product) in the recipe with the id of the recipe and the ingredient
      * @param $idRecipeList
      * @param $idRecipe
      * @return \Illuminate\Http\RedirectResponse

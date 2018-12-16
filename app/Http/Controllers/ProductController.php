@@ -45,7 +45,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Get the parameters of the new product and and create it
+     * Get the parameters of the new product and create it
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -181,7 +181,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Check if the checkbox is checked. If true, also add the product to the shopping list.
+     * Check if the checkbox is checked. If true, also add the product to the shopping list automatically.
      * @param $id
      */
     public static function checkRegular($id)

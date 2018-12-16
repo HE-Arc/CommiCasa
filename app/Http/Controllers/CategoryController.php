@@ -8,13 +8,20 @@ use Auth;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new CategoryController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /*
-     * For displaying the categores, send a parameter caterogies who includes a list of category
+
+    /**
+     * Display all the categories in the view listCategory by user id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function listCategory()
     {
@@ -23,8 +30,10 @@ class CategoryController extends Controller
         return view('category/listCategory')->with('categories', $categories);
     }
 
-    /*
-     * Delete a category selected by its id
+    /**
+     * Delete a category selelected by its id
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteCategory($id)
     {
@@ -34,7 +43,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update a category using his id
+     * Update a category using its id
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
@@ -56,7 +65,7 @@ class CategoryController extends Controller
 }
 
     /**
-     * Guide toward the view addCategory
+     * Redirect toward the view addCategory
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function addCategory()
