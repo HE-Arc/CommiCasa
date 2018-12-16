@@ -37,7 +37,7 @@
                                 @if($listRecipe->image != "default.png")
                                     <img src="{{URL::to("recipes/images/". Auth::user()->id . "/" . $listRecipe->image)}}" alt="" height="200" width="200">
                                     @else
-                                    <img src="{{ URL::to('recipes/images/default.png')}}" alt="" height="200" width="200">
+                                    <img src="{{ URL::to('images/default.png')}}" alt="" height="200" width="200">
                                     @endif
                             </div>
                             <div class="col-sm-8">

@@ -33,7 +33,7 @@
                                 @if($product->image != "default.png")
                                     <img src="products/images/{{Auth::user()->id}}/{{$product->image}}" alt="" height="75" width="75">
                                 @else
-                                    <img src="products/images/default.png" alt="" height="75" width="75">
+                                    <img src="images/default.png" alt="" height="75" width="75">
                                 @endif
                             </td>
                             <td class="align-middle" >{{ $product->name}}</td>

@@ -24,7 +24,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        return redirect()->route('listCategory')->with('success delete', $category['name'] . ' has been removed');
+        return redirect()->route('listCategory')->with('success delete', '"' . $category['name'] . '" has been removed');
     }
 
     public function updateCategory(Request $request, $id)
