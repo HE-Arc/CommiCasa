@@ -24,7 +24,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        return redirect()->route('listCategory')->with('success delete', $category['name'] . ' has been deleted');
+        return redirect()->route('listCategory')->with('success delete', $category['name'] . ' has been removed');
     }
 
     public function updateCategory(Request $request, $id)
@@ -53,7 +53,7 @@ class CategoryController extends Controller
         $parameters = $request->except(['_token']);
         Category::create($parameters);
 
-        return redirect()->route('listCategory')->with('success add', 'Product has been added');
+        return redirect()->route('listCategory')->with('success add', 'New category has been added');
 
     }
 }

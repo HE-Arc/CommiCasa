@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1> {{isset($product) ? 'Edit' : 'Add'}} Product</h1>
+        <h1> {{isset($product) ? 'Edit the' : 'Add a new'}} product</h1>
 
         <form method="post" action="{{isset($product) ? route('editProduct' ,['id' => $product->id]) : route('validateProduct')}}"  enctype="multipart/form-data">
             @csrf
@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group">
-                <label for="category_id">Categories</label>
+                <label for="category_id">Category</label>
                 <select class="form-control" id="category_id" name="category_id" selected="" required>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}"
@@ -50,7 +50,7 @@
                 <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg"
                        value="{{isset($product) ? $product->image : 'default.png'}}">
             </div>
-
+            <br>
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="3"
@@ -70,7 +70,7 @@
             <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-info"> {{isset($product) ? 'Edit Product' : 'Add Product'}}</button>
+                <button type="submit" class="btn btn-lg btn-primary"> {{isset($product) ? 'Edit' : 'Add'}}</button>
             </div>
         </form>
     </div>

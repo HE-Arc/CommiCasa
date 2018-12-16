@@ -63,7 +63,7 @@ class ProductController extends Controller
         $product->save();
         $this->checkRegular($product->id);
 
-            return redirect()->route('listProduct')->with('success add', $product->name. ' has been add');
+            return redirect()->route('listProduct')->with('success add', '"' . $product->name.'" has been added');
     }
 
     public function updateProduct(Request $request)
@@ -75,7 +75,7 @@ class ProductController extends Controller
         {
             $param['quantity'] = $product->quantity + 1;
             $product->update($param);
-            return $this->backWithMessage('success add', $product->name . ' has been increase of 1');
+            return $this->backWithMessage('success add', 'Quantity of ' . $product->name . ' has been increased of 1');
         }
         else
         {
@@ -84,7 +84,7 @@ class ProductController extends Controller
                 $param['quantity'] = $product->quantity - 1;
                 $product->update($param);
             }
-                return $this->backWithMessage('success delete', $product->name . ' has been remove of 1');
+                return $this->backWithMessage('success delete', 'Quantity of ' . $product->name . ' has been decreased of 1');
         }
     }
 
@@ -126,7 +126,7 @@ class ProductController extends Controller
 
             $product->save();
 
-            return redirect()->route('listProduct')->with('success add', $product->name.' has been updated');
+            return redirect()->route('listProduct')->with('success add', '"' . $product->name.'" has been updated');
         }
 
         return view('product/addProduct', compact('product', 'categories'));
@@ -142,7 +142,7 @@ class ProductController extends Controller
             File::delete("products/images/". Auth::user()->id . "/" . $image);
         }
         $product->delete();
-        return redirect()->route('listProduct')->with('success delete', $product->name. ' has been deleted');
+        return redirect()->route('listProduct')->with('success delete', '"' . $product->name.'" has been removed');
     }
 
     public static function checkRegular($id)

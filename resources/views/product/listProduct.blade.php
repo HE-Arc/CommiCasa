@@ -2,8 +2,8 @@
 @section('content')
 
 <div class="container">
-    <h1> Product List</h1>
-        <button class="btn btn-info" onclick="location.href='{{route('addProduct')}}'">Add Product</button>
+    <h1>Your list of product</h1>
+        <button class="btn btn-lg btn-primary" onclick="location.href='{{route('addProduct')}}'">Add a new product</button>
     <hr>
         @if(count($products) > 0)
         @foreach($categories as $category)

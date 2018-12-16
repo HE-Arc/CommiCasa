@@ -64,7 +64,7 @@ class RecipeController extends Controller
                 'quantity_required' => $paramRecipe['quant'][$i]
             ]);
         }
-        return redirect()->route('listRecipe')->with('success add', 'Recipe has been added');
+        return redirect()->route('listRecipe')->with('success add', '"' . $recipeID->name . '"' . ' has been added');
     }
     public function editRecipe(Request $request, $id)
     {
@@ -118,10 +118,10 @@ class RecipeController extends Controller
                 }
             }
 
-            return redirect()->route('listRecipe')->with('success add', 'Recipe has been updated');
+            return redirect()->route('listRecipe')->with('success add', '"'. $request['name'] . '" has been updated');
         }
 
-        return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'))->with('success add', 'Recipe has been added');
+        return view('recipe/addRecipe', compact('products', 'recipeList', 'recipes'))->with('success add', '"'. $request['name'] . '" has been updated');
     }
     public function deleteRecipeList($id)
     {
@@ -131,13 +131,13 @@ class RecipeController extends Controller
             File::delete("recipes/images/". Auth::user()->id . "/" . $image);
         }
         $recipeList->delete();
-        return redirect()->route('listRecipe')->with('success delete', 'List of recipe has been deleted');
+        return redirect()->route('listRecipe')->with('success delete', '"'. $recipeList['name'] . '" has been removed');
     }
 
     public function deleteRecipe($idRecipeList, $idRecipe)
     {
         $recipe = Recipe::find($idRecipe);
         $recipe->delete();
-        return redirect()->route('editRecipe', $idRecipeList)->with('success delete', 'Recipe has been deleted');;
+        return redirect()->route('editRecipe', $idRecipeList)->with('success delete', 'An ingredient has been removed');;
     }
 }

@@ -118,8 +118,7 @@
         <hr class="container marketing">
         <footer class="container marketing" bottom="0">
             <p class="float-right"><a href="#">Back to the top</a></p>
-            <p>
-                @ 2018 He-Arc, Luca-Julien-Jeremy</p>
+            <p>© 2018 He-Arc, Srdjenovic - Feuillade - Dubois</p>
         </footer>
 
     </body>

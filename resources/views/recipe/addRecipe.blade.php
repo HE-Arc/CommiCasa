@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1> {{isset($recipeList) ? 'Edit' : 'Add'}} Recipe</h1>
+    <h1> {{isset($recipeList) ? 'Edit the' : 'Add a new'}} recipe</h1>
     <form method="post" action="{{isset($recipeList) ? route('editRecipe' ,['id' => $recipeList->id]) : route('validateRecipe')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -60,10 +60,10 @@
                     <button id="b1" class="btn add-more btn-primary" type="button">+</button>
                 </div>
             </div>
-
+                <br>
         @if (isset($recipeList))
         <input type="hidden" id="addProdOK" name="addProdOK" value="0">
-        <button type=button class="btn btn-info" id="more">Add More Ingredients</button>
+        <button type=button class="btn btn-primary" id="more">Add More Ingredients</button>
         @endif
         <input type="hidden" name="count" value="1" />
 </div>
@@ -80,6 +80,8 @@
     <input type="file" class="form-control-file" name="image" id="image" accept=".png, .jpg, .jpeg">
 </div>
 
+<br>
+
 <div class="form-group">
     <label for="description">Description</label>
     <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe your recipe...">{{isset($recipeList) ? $recipeList->description : ''}}</textarea>
@@ -88,7 +90,7 @@
 <input type='hidden' value={{ Auth::user()->id }} name='user_id'>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-info"> {{isset($recipeList) ? 'Edit' : 'Add'}} Recipe</button>
+    <button type="submit" class="btn btn-lg btn-primary"> {{isset($recipeList) ? 'Edit' : 'Add'}}</button>
 </div>
 </form>
 </div>
