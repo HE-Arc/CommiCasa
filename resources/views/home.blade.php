@@ -42,7 +42,7 @@
                             <p>Discover your shopping list</p>
                             <p>
                                 <button class="btn btn-secondary btn-lg"
-                                        onclick="window.location.href='{{route('listRecipe')}}'">Create your shopping list
+                                        onclick="window.location.href='{{route('listShopping')}}'">Create your shopping list
                                 </button>
                             </p>
                         </div>
@@ -53,7 +53,7 @@
                             <p>Discover your recipes</p>
                             <p>
                                 <button class="btn btn-secondary btn-lg"
-                                        onclick="window.location.href='{{route('listShopping')}}'">Create your recipes
+                                        onclick="window.location.href='{{route('listRecipe')}}'">Create your recipes
                                 </button>
                             </p>
                         </div>
