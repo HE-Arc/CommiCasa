@@ -44,7 +44,7 @@
                             @csrf
                             <input type='hidden' value='{{$product->id}}' name='product_id'>
                             <button class="btn btn-sm btn-sm btn-danger" style="width:35px; height:35px"
-                            @if($product->regular == 1 || $product->quantity < ($product->alert))
+                            @if($product->regular == 1)
                                 disabled
                             @endif
                             ><i class="fas fa-trash"></i></button>
