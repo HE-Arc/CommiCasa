@@ -13,6 +13,9 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
+    /*
+     * For displaying the categores, send a parameter caterogies who includes a list of category
+     */
     public function listCategory()
     {
         $categories = Category::where('user_id', Auth::user()->id)->get();
@@ -20,6 +23,9 @@ class CategoryController extends Controller
         return view('category/listCategory')->with('categories', $categories);
     }
 
+    /*
+     * Delete a category selected by its id
+     */
     public function deleteCategory($id)
     {
         $category = Category::find($id);
@@ -27,6 +33,12 @@ class CategoryController extends Controller
         return redirect()->route('listCategory')->with('success delete', '"' . $category['name'] . '" has been removed');
     }
 
+    /**
+     * Update a category using his id
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function updateCategory(Request $request, $id)
     {
         $category = Category::find($id);
@@ -43,11 +55,20 @@ class CategoryController extends Controller
         return view('category/addCategory')->with('category', $category);
 }
 
+    /**
+     * Guide toward the view addCategory
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addCategory()
     {
         return view('category/addCategory');
     }
 
+    /**
+     * Create a new category and after redirect toward the list of category
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createCategory(Request $request)
     {
         $parameters = $request->except(['_token']);

@@ -12,11 +12,20 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new ProductController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Display the list of product in view listProduct
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listProduct()
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
@@ -24,6 +33,10 @@ class ProductController extends Controller
         return view('product/listProduct', compact('products', 'categories'));
     }
 
+    /**
+     * Redirect to the view addProduct with in parameter the id of the user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addProduct()
     {
         $categories = Category::where('user_id', Auth::user()->id)->get();
@@ -31,6 +44,11 @@ class ProductController extends Controller
         return view('product/addProduct', compact( 'categories'));
     }
 
+    /**
+     * Get the parameters of the new product and and create it
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function validProduct(Request $request)
     {
         if($request['regular'] == 'off')
@@ -66,6 +84,12 @@ class ProductController extends Controller
             return redirect()->route('listProduct')->with('success add', '"' . $product->name.'" has been added');
     }
 
+
+    /**
+     * Get the product by id and increase or decrease his quantity by 1
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateProduct(Request $request)
     {
         $param = $request->except('_token');
@@ -88,6 +112,12 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Get the product by id and edit it if the method is POST. Otherwise redirect to the view addProduct with the id of the product.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function editProduct(Request $request, $id)
     {
         //var_dump($request); die;
@@ -132,6 +162,11 @@ class ProductController extends Controller
         return view('product/addProduct', compact('product', 'categories'));
     }
 
+    /**
+     * Delete the product with its id
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteProduct($id)
     {
         $product = Product::where('id', $id)->first();
@@ -145,6 +180,10 @@ class ProductController extends Controller
         return redirect()->route('listProduct')->with('success delete', '"' . $product->name.'" has been removed');
     }
 
+    /**
+     * Check if the checkbox is checked. If true, also add the product to the shopping list.
+     * @param $id
+     */
     public static function checkRegular($id)
     {
         $shopID = Shopping::where('product_id', $id)->first();
@@ -162,6 +201,11 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Check if a product by its id is in the shopping list
+     * @param $id
+     * @return bool
+     */
     public static function checkIfProductIsInShopping($id)
     {
         $shopID = Shopping::where('product_id', $id)->first();
@@ -171,6 +215,12 @@ class ProductController extends Controller
             return true;
     }
 
+    /**
+     * Redirect to a view with a message
+     * @param $type
+     * @param $message
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function backWithMessage($type, $message)
     {
         return back()->with($type, $message);
