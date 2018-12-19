@@ -121,7 +121,7 @@ class ProductController extends Controller
     public function editProduct(Request $request, $id)
     {
         //var_dump($request); die;
-        $categories = Category::All();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
         $product = Product::find($id);
         $image = $product['image'];
         if($request->isMethod('post'))
