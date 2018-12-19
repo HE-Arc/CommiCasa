@@ -81,7 +81,7 @@ class ShoppingController extends Controller
     }
 
     /**
-     * Delete a product from the shopping list
+     * Delete a product bz from the shopping list
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
