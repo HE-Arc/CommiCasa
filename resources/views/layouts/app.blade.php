@@ -23,7 +23,7 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
-        <link rel="shortcut icon" type="image/x-icon" href="images/logo.jpg" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{URL::to('images/logo.jpg')}}" />
     </head>
 
     <body>
