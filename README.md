@@ -1,6 +1,8 @@
 # CommiCasa
 Un inventaire des différents produits consommable de la maison (nourriture, produits ménages ... etc). Développé avec Laravel.
 
+Le lien vers l'application : https://commicasa.srvz-webapp.he-arc.ch/
+
 ## User guide
 
 Etapes à réaliser :
