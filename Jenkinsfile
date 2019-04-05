@@ -8,8 +8,8 @@ pipeline {
               }
             }
             steps {
-                sh '(mvn clean package)'
-                stash name: "app", includes: "**"
+                sh '(cd ./CommiCasaTest/; mvn clean package)'
+		stash name: "app", includes: "**"
             }
         
 
