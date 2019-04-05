@@ -6,10 +6,11 @@ pipeline {
                               docker {
                image 'maven:3-alpine'
               }
+            }
             steps {
                 echo 'Building'
             }
-        }
+        
 
     }
     }
